@@ -71,7 +71,7 @@ export function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-xl text-center shadow-md"
+              className="bg-white rounded-md text-center shadow-md"
               style={{ padding: '2rem' }}
             >
               <div 

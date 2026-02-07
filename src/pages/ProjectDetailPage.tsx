@@ -168,7 +168,7 @@ export function ProjectDetailPage() {
                         key={index}
                         src={image}
                         alt={`${project.title} - Imagen ${index + 1}`}
-                        className="rounded-lg w-full aspect-video object-cover"
+                        className="rounded-sm w-full aspect-video object-cover"
                       />
                     ))}
                   </div>
@@ -183,7 +183,7 @@ export function ProjectDetailPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-neutral-50 rounded-xl sticky top-28"
+              className="bg-neutral-50 rounded-md sticky top-28"
               style={{ padding: '1.5rem' }}
             >
               <h3 

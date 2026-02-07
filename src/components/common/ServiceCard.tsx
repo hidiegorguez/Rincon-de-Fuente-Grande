@@ -26,12 +26,12 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+      className="group bg-white rounded-md shadow-md hover:shadow-xl transition-all duration-300"
       style={{ padding: '2rem' }}
     >
       {/* Icono */}
       <div 
-        className="w-14 h-14 rounded-lg bg-primary-50 flex items-center justify-center group-hover:bg-primary-500 transition-colors duration-300"
+        className="w-14 h-14 rounded-sm bg-primary-50 flex items-center justify-center group-hover:bg-primary-500 transition-colors duration-300"
         style={{ marginBottom: '1.5rem' }}
       >
         <Icon className="w-7 h-7 text-primary-500 group-hover:text-white transition-colors duration-300" />

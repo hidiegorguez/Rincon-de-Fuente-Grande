@@ -73,7 +73,7 @@ export function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-white rounded-xl shadow-md" style={{ padding: '2rem' }}>
+            <div className="bg-white rounded-md shadow-md" style={{ padding: '2rem' }}>
               <h2 
                 className="text-2xl font-bold text-neutral-800"
                 style={{ marginBottom: '1.5rem' }}
@@ -116,7 +116,7 @@ export function ContactPage() {
                       required
                       value={formState.name}
                       onChange={handleChange}
-                      className="w-full rounded-lg border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
+                      className="w-full rounded-sm border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                       style={{ padding: '0.75rem 1rem' }}
                       placeholder="Tu nombre"
                     />
@@ -137,7 +137,7 @@ export function ContactPage() {
                       required
                       value={formState.email}
                       onChange={handleChange}
-                      className="w-full rounded-lg border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
+                      className="w-full rounded-sm border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                       style={{ padding: '0.75rem 1rem' }}
                       placeholder="tu@email.com"
                     />
@@ -157,7 +157,7 @@ export function ContactPage() {
                       name="phone"
                       value={formState.phone}
                       onChange={handleChange}
-                      className="w-full rounded-lg border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
+                      className="w-full rounded-sm border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                       style={{ padding: '0.75rem 1rem' }}
                       placeholder="+34 600 000 000"
                     />
@@ -178,7 +178,7 @@ export function ContactPage() {
                       rows={5}
                       value={formState.message}
                       onChange={handleChange}
-                      className="w-full rounded-lg border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors resize-none"
+                      className="w-full rounded-sm border border-neutral-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors resize-none"
                       style={{ padding: '0.75rem 1rem' }}
                       placeholder="¿En qué podemos ayudarte?"
                     />
@@ -229,7 +229,7 @@ export function ContactPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {/* Email */}
               <div className="flex items-start" style={{ gap: '1rem' }}>
-                <div className="w-12 h-12 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-sm bg-primary-50 flex items-center justify-center shrink-0">
                   <Mail className="w-6 h-6 text-primary-500" />
                 </div>
                 <div>
@@ -247,7 +247,7 @@ export function ContactPage() {
 
               {/* Phone */}
               <div className="flex items-start" style={{ gap: '1rem' }}>
-                <div className="w-12 h-12 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-sm bg-primary-50 flex items-center justify-center shrink-0">
                   <Phone className="w-6 h-6 text-primary-500" />
                 </div>
                 <div>
@@ -266,7 +266,7 @@ export function ContactPage() {
               {/* Schedule */}
               {companyInfo.contact.schedule && (
                 <div className="flex items-start" style={{ gap: '1rem' }}>
-                  <div className="w-12 h-12 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-sm bg-primary-50 flex items-center justify-center shrink-0">
                     <Clock className="w-6 h-6 text-primary-500" />
                   </div>
                   <div>
@@ -283,7 +283,7 @@ export function ContactPage() {
 
             {/* Trust message */}
             <div 
-              className="bg-primary-50 rounded-xl"
+              className="bg-primary-50 rounded-md"
               style={{ padding: '1.5rem', marginTop: '2rem' }}
             >
               <h3 

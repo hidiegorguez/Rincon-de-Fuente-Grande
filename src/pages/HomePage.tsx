@@ -154,7 +154,7 @@ export function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white/10 backdrop-blur-sm rounded-xl"
+              className="bg-white/10 backdrop-blur-sm rounded-md"
               style={{ padding: '1.5rem' }}
             >
               {/* Stars */}

@@ -25,7 +25,7 @@ export function Card({
     <motion.div
       whileHover={hover ? { y: -4 } : undefined}
       transition={{ duration: 0.3 }}
-      className={`bg-white rounded-xl shadow-md ${
+      className={`bg-white rounded-md shadow-md ${
         hover ? 'hover:shadow-xl transition-shadow duration-300' : ''
       } ${className}`}
       style={paddingStylesCSS[padding]}
