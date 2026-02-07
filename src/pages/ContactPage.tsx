@@ -45,7 +45,7 @@ export function ContactPage() {
     <>
       {/* Hero */}
       <section 
-        className="bg-white-200"
+        className="bg-linear-to-t from-white-200 to-accent-300"
         style={{ paddingTop: '7rem', paddingBottom: '1rem' }}
       >
         <div className="layout-container">

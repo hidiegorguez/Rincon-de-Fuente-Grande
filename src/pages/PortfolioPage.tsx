@@ -27,8 +27,8 @@ export function PortfolioPage() {
     <>
       {/* Hero */}
       <section 
-        className="bg-white-300"
-        style={{ paddingTop: '7rem', paddingBottom: '2rem' }}
+        className="bg-linear-to-t from-white-200 to-accent-300"
+        style={{ paddingTop: '7rem', paddingBottom: '2rem', marginBottom: '2rem' }}
       >
         <div className="layout-container">
           <div className="max-w-3xl">
