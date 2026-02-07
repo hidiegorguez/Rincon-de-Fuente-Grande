@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, Linkedin, Instagram } from 'lucide-react';
 import { navigation, companyInfo } from '@/data/company';
+import { Logo } from '@/components/common';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -15,12 +16,7 @@ export function Footer() {
           {/* Columna 1: Logo y descripción */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white">
-              <img 
-                src="/icon.png" 
-                alt="" 
-                className="w-10 h-10"
-                style={{ filter: 'brightness(0) invert(1)' }}
-              />
+              <Logo className="w-10 h-10" />
               {companyInfo.name}
             </Link>
             <p className="text-neutral-400" style={{ marginTop: '1rem', maxWidth: '28rem' }}>

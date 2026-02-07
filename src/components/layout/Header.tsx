@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Menu, X, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navigation, companyInfo, siteConfig } from '@/data/company';
-import { Button } from '@/components/common';
+import { Button, Logo } from '@/components/common';
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -50,12 +50,7 @@ export function Header() {
               isScrolled ? 'text-primary-500' : 'text-white'
             }`}
           >
-            <img 
-              src="/icon.svg" 
-              alt="" 
-              className="w-8 h-8 md:w-10 md:h-10"
-              style={{ filter: isScrolled ? 'none' : 'brightness(0) invert(1)' }}
-            />
+            <Logo className="w-8 h-8 md:w-10 md:h-10" />
             {companyInfo.name}
           </Link>
 

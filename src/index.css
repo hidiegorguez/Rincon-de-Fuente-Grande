@@ -85,6 +85,110 @@
 }
 
 /* ============================================
+   TEMAS - Sobrescribir variables CSS
+   ============================================ */
+
+/* TEMA: EARTH (Tonos tierra/marrón) */
+.theme-earth {
+  --color-primary-50: #faf8f5;
+  --color-primary-100: #f0ebe3;
+  --color-primary-200: #e1d7c7;
+  --color-primary-300: #c9b89e;
+  --color-primary-400: #a69070;
+  --color-primary-500: #6b4423;
+  --color-primary-600: #5c3a1e;
+  --color-primary-700: #4a2f18;
+  --color-primary-800: #382312;
+  --color-primary-900: #26180c;
+
+  --color-accent-50: #fdf8f3;
+  --color-accent-100: #f9ede0;
+  --color-accent-200: #f3dbc2;
+  --color-accent-300: #e8c39b;
+  --color-accent-400: #d4a574;
+  --color-accent-500: #c08552;
+  --color-accent-600: #a06d42;
+  --color-accent-700: #805634;
+  --color-accent-800: #604026;
+  --color-accent-900: #402a19;
+}
+
+/* TEMA: FOREST (Verde bosque) */
+.theme-forest {
+  --color-primary-50: #f6f9f6;
+  --color-primary-100: #e3ece3;
+  --color-primary-200: #c7d9c7;
+  --color-primary-300: #9bbf9b;
+  --color-primary-400: #6a9a6a;
+  --color-primary-500: #2d5a3d;
+  --color-primary-600: #264d34;
+  --color-primary-700: #1f3f2a;
+  --color-primary-800: #172f20;
+  --color-primary-900: #0f2016;
+
+  --color-accent-50: #fefbf3;
+  --color-accent-100: #fcf4e0;
+  --color-accent-200: #f8e6c2;
+  --color-accent-300: #f0d29b;
+  --color-accent-400: #e5b86e;
+  --color-accent-500: #d4994a;
+  --color-accent-600: #b37d3a;
+  --color-accent-700: #8f632e;
+  --color-accent-800: #6b4a22;
+  --color-accent-900: #473217;
+}
+
+/* TEMA: OCEAN (Azul océano) */
+.theme-ocean {
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0077b6;
+  --color-primary-600: #006499;
+  --color-primary-700: #00527d;
+  --color-primary-800: #003d5e;
+  --color-primary-900: #002940;
+
+  --color-accent-50: #ecfeff;
+  --color-accent-100: #cffafe;
+  --color-accent-200: #a5f3fc;
+  --color-accent-300: #67e8f9;
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+  --color-accent-700: #0e7490;
+  --color-accent-800: #155e75;
+  --color-accent-900: #164e63;
+}
+
+/* TEMA: WINE (Burdeos/vino) */
+.theme-wine {
+  --color-primary-50: #fdf2f4;
+  --color-primary-100: #fce7eb;
+  --color-primary-200: #f9d0d9;
+  --color-primary-300: #f4a9ba;
+  --color-primary-400: #ec7a95;
+  --color-primary-500: #722f37;
+  --color-primary-600: #62282f;
+  --color-primary-700: #502027;
+  --color-primary-800: #3d181d;
+  --color-primary-900: #2a1014;
+
+  --color-accent-50: #fdf8f3;
+  --color-accent-100: #f9ede0;
+  --color-accent-200: #f3dbc2;
+  --color-accent-300: #e8c39b;
+  --color-accent-400: #d4a574;
+  --color-accent-500: #c08552;
+  --color-accent-600: #a06d42;
+  --color-accent-700: #805634;
+  --color-accent-800: #604026;
+  --color-accent-900: #402a19;
+}
+
+/* ============================================
    CONTAINER UTILITY
    ============================================ */
 
@@ -474,3 +578,81 @@ select {
   background-color: var(--color-primary-200);
   color: var(--color-primary-900);
 }
+
+/* ============================================
+   CLASES DINÁMICAS PARA TEMAS
+   Estas clases usan variables CSS para que
+   cambien según el tema seleccionado
+   ============================================ */
+
+/* Background colors - Primary */
+.bg-primary-50 { background-color: var(--color-primary-50) !important; }
+.bg-primary-100 { background-color: var(--color-primary-100) !important; }
+.bg-primary-200 { background-color: var(--color-primary-200) !important; }
+.bg-primary-300 { background-color: var(--color-primary-300) !important; }
+.bg-primary-400 { background-color: var(--color-primary-400) !important; }
+.bg-primary-500 { background-color: var(--color-primary-500) !important; }
+.bg-primary-600 { background-color: var(--color-primary-600) !important; }
+.bg-primary-700 { background-color: var(--color-primary-700) !important; }
+.bg-primary-800 { background-color: var(--color-primary-800) !important; }
+.bg-primary-900 { background-color: var(--color-primary-900) !important; }
+
+/* Background colors - Accent */
+.bg-accent-50 { background-color: var(--color-accent-50) !important; }
+.bg-accent-100 { background-color: var(--color-accent-100) !important; }
+.bg-accent-200 { background-color: var(--color-accent-200) !important; }
+.bg-accent-300 { background-color: var(--color-accent-300) !important; }
+.bg-accent-400 { background-color: var(--color-accent-400) !important; }
+.bg-accent-500 { background-color: var(--color-accent-500) !important; }
+.bg-accent-600 { background-color: var(--color-accent-600) !important; }
+.bg-accent-700 { background-color: var(--color-accent-700) !important; }
+.bg-accent-800 { background-color: var(--color-accent-800) !important; }
+.bg-accent-900 { background-color: var(--color-accent-900) !important; }
+
+/* Text colors - Primary */
+.text-primary-50 { color: var(--color-primary-50) !important; }
+.text-primary-100 { color: var(--color-primary-100) !important; }
+.text-primary-200 { color: var(--color-primary-200) !important; }
+.text-primary-300 { color: var(--color-primary-300) !important; }
+.text-primary-400 { color: var(--color-primary-400) !important; }
+.text-primary-500 { color: var(--color-primary-500) !important; }
+.text-primary-600 { color: var(--color-primary-600) !important; }
+.text-primary-700 { color: var(--color-primary-700) !important; }
+.text-primary-800 { color: var(--color-primary-800) !important; }
+.text-primary-900 { color: var(--color-primary-900) !important; }
+
+/* Text colors - Accent */
+.text-accent-50 { color: var(--color-accent-50) !important; }
+.text-accent-100 { color: var(--color-accent-100) !important; }
+.text-accent-200 { color: var(--color-accent-200) !important; }
+.text-accent-300 { color: var(--color-accent-300) !important; }
+.text-accent-400 { color: var(--color-accent-400) !important; }
+.text-accent-500 { color: var(--color-accent-500) !important; }
+.text-accent-600 { color: var(--color-accent-600) !important; }
+.text-accent-700 { color: var(--color-accent-700) !important; }
+.text-accent-800 { color: var(--color-accent-800) !important; }
+.text-accent-900 { color: var(--color-accent-900) !important; }
+
+/* Border colors - Primary */
+.border-primary-50 { border-color: var(--color-primary-50) !important; }
+.border-primary-100 { border-color: var(--color-primary-100) !important; }
+.border-primary-200 { border-color: var(--color-primary-200) !important; }
+.border-primary-300 { border-color: var(--color-primary-300) !important; }
+.border-primary-400 { border-color: var(--color-primary-400) !important; }
+.border-primary-500 { border-color: var(--color-primary-500) !important; }
+.border-primary-600 { border-color: var(--color-primary-600) !important; }
+.border-primary-700 { border-color: var(--color-primary-700) !important; }
+.border-primary-800 { border-color: var(--color-primary-800) !important; }
+.border-primary-900 { border-color: var(--color-primary-900) !important; }
+
+/* Hover states */
+.hover\:bg-primary-500:hover { background-color: var(--color-primary-500) !important; }
+.hover\:bg-primary-600:hover { background-color: var(--color-primary-600) !important; }
+.hover\:bg-primary-700:hover { background-color: var(--color-primary-700) !important; }
+.hover\:text-primary-500:hover { color: var(--color-primary-500) !important; }
+.hover\:text-primary-600:hover { color: var(--color-primary-600) !important; }
+.hover\:border-primary-500:hover { border-color: var(--color-primary-500) !important; }
+
+/* Ring/Focus colors */
+.ring-primary-500 { --tw-ring-color: var(--color-primary-500) !important; }
+.focus\:ring-primary-500:focus { --tw-ring-color: var(--color-primary-500) !important; }
