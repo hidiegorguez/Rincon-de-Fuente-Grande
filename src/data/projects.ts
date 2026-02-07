@@ -8,6 +8,86 @@ import type { Project } from '@/types';
 
 export const projects: Project[] = [
   {
+    id: '5',
+    slug: 'edificio-onati',
+    title: 'Edificio Residencial en Oñati',
+    location: {
+      city: 'Oñati',
+      province: 'Guipúzcoa',
+      region: 'País Vasco',
+    },
+    type: 'reforma-venta',
+    description:
+      'Oportunidad única: chalet de los años 70 con parcela de 2.000m² en una de las villas más bonitas de España. La estrategia consistió en una reforma completa manteniendo la estructura original pero modernizando completamente interiores, instalaciones y eficiencia energética. El jardín se acondicionó con piscina y zona de barbacoa. Actualmente en fase final de comercialización.',
+    shortDescription:
+      'Edificio de 4 viviendas en Oñati, en proceso de reforma integral para venta posterior.',
+    investmentDetails: {
+      purchasePrice: 180000,
+      reformCost: 150000,
+      totalInvestment: 330000,
+      currentValue: 485000,
+      annualReturn: 47.0,
+    },
+    features: [
+      '4 viviendas',
+      '370m²',
+      // 'Piscina privada',
+      // '5 habitaciones',
+      // 'Garaje doble',
+      // 'Villa histórica',
+    ],
+    images: {
+      main: 'public/projects/edificio-onati/main.jpg',
+      gallery: [
+        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
+      ],
+    },
+    status: 'in-progress',
+    year: 2026,
+    featured: true,
+  },
+  {
+    id: '6',
+    slug: 'atico-centro-eibar',
+    title: 'Ático en el centro de Eibar',
+    location: {
+      city: 'Eibar',
+      province: 'Guipúzcoa',
+      region: 'País Vasco',
+    },
+    type: 'reforma-venta',
+    description:
+      'Adquisición de una casa rural de piedra del siglo XIX en estado de abandono, ubicada a 5 km de los Lagos de Covadonga. Realizamos una reforma integral respetando la arquitectura tradicional asturiana, incorporando aislamiento térmico moderno, calefacción por suelo radiante y acabados de alta calidad. El resultado: una vivienda de 180m² con 4 habitaciones, perfecta para turismo rural o residencia permanente.',
+    shortDescription:
+      'Reforma integral de un ático de 35m² con vistas a Plaza de Unzaga.',
+    investmentDetails: {
+      purchasePrice: 70000,
+      reformCost: 12000,
+      totalInvestment: 82000,
+      currentValue: 115000,
+      annualReturn: 31.7,
+    },
+    features: [
+      '35m² construidos',
+      '1 habitación',
+      'Balcón',
+      'Vistas a Plaza de Unzaga',
+      'Cocina moderna',
+      'Materiales de alta calidad',
+    ],
+    images: {
+      main: '',
+      gallery: [
+        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
+      ],
+    },
+    status: 'in-progress',
+    year: 2026,
+    featured: true,
+  },
+  {
     id: '1',
     slug: 'casa-rural-asturias',
     title: 'Casa Rural en Cangas de Onís',
