@@ -6,9 +6,9 @@ interface SectionProps {
   className?: string;
   id?: string;
   background?: 'white' | 'light' | 'primary' | 'gradient';
-  paddingY?: 'sm' | 'md' | 'lg' | 'xl';
+  paddingY?: 'xs' |'sm' | 'md' | 'lg' | 'xl';
 }
-
+  
 const backgroundStyles = {
   white: 'bg-white',
   light: 'bg-neutral-50',
@@ -18,6 +18,7 @@ const backgroundStyles = {
 };
 
 const paddingStyles = {
+  xs: 'section-padding-xs',
   sm: 'section-padding-sm',
   md: 'section-padding-md',
   lg: 'section-padding-lg',

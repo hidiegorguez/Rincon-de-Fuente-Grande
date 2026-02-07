@@ -23,17 +23,17 @@ export function TermsPage() {
       {/* Hero */}
       <section 
         className="bg-white"
-        style={{ paddingTop: '7rem', paddingBottom: '2rem' }}
+        style={{ paddingTop: '7rem', paddingBottom: '0rem' }}
       >
         <div className="layout-container">
           <div className="max-w-3xl">
             <h1 
-              className="text-4xl md:text-5xl font-bold text-neutral-800"
+              className="text-2xl md:text-3xl font-bold text-neutral-800"
               style={{ marginBottom: '1rem' }}
             >
               {t('terms.title')}
             </h1>
-            <p className="text-lg md:text-xl text-neutral-600">
+            <p className="md:text-lg text-neutral-600">
               {t('terms.subtitle')}
             </p>
           </div>
@@ -41,9 +41,9 @@ export function TermsPage() {
       </section>
 
       {/* Content */}
-      <Section background="white" paddingY="lg">
+      <Section background="white" paddingY="sm">
         <div className="max-w-4xl mx-auto">
-          <p className="text-neutral-600" style={{ marginBottom: '2rem' }}>
+          <p className="text-neutral-500" style={{ marginBottom: '2rem' }}>
             {t('terms.lastUpdate')}: {formatDate()}
           </p>
 

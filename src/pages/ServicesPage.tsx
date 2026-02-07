@@ -12,17 +12,17 @@ export function ServicesPage() {
       {/* Hero */}
       <section 
         className="bg-white-200"
-        style={{ paddingTop: '7rem', paddingBottom: '2rem' }}
+        style={{ paddingTop: '7rem', paddingBottom: '1rem' }}
       >
         <div className="layout-container">
           <div className="max-w-3xl">
             <h1 
-              className="text-4xl md:text-5xl font-bold text-neutral-800"
+              className="text-2xl md:text-3xl font-bold text-neutral-800"
               style={{ marginBottom: '1rem' }}
             >
               {t('services.title')}
             </h1>
-            <p className="text-lg md:text-xl text-neutral-600">
+            <p className="md:text-lg text-neutral-600">
               {t('services.subtitle')}
             </p>
           </div>

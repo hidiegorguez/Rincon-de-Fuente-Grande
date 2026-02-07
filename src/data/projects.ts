@@ -49,8 +49,8 @@ export const projects: Project[] = [
   },
   {
     id: '2',
-    slug: 'apartamento-san-sebastian',
-    title: 'Apartamento Centro San Sebastián',
+    slug: 'loft-san-sebastian',
+    title: 'Loft Centro San Sebastián',
     location: {
       city: 'San Sebastián',
       province: 'Guipúzcoa',
@@ -58,9 +58,9 @@ export const projects: Project[] = [
     },
     type: 'alquiler',
     description:
-      'Adquisición de un apartamento de 75m² en el centro histórico de San Sebastián, a 300 metros de la Playa de la Concha. Tras una reforma estética que modernizó cocina y baños, el inmueble genera ingresos estables mediante alquiler turístico de alta gama. La ubicación privilegiada garantiza una ocupación superior al 80% anual.',
+      'Adquisición de un loft de 75m² en el centro histórico de San Sebastián, a 300 metros de la Playa de la Concha. Tras una reforma estética que modernizó cocina y baños, el inmueble genera ingresos estables mediante alquiler turístico de alta gama. La ubicación privilegiada garantiza una ocupación superior al 80% anual.',
     shortDescription:
-      'Apartamento céntrico reformado, generando rentabilidad mediante alquiler turístico premium.',
+      'Loft céntrico reformado, generando rentabilidad mediante alquiler turístico premium.',
     investmentDetails: {
       purchasePrice: 320000,
       reformCost: 35000,

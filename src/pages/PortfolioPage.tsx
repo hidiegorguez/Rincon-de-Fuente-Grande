@@ -33,12 +33,12 @@ export function PortfolioPage() {
         <div className="layout-container">
           <div className="max-w-3xl">
             <h1 
-              className="text-4xl md:text-5xl font-bold text-neutral-800"
+              className="text-2xl md:text-3xl font-bold text-neutral-800"
               style={{ marginBottom: '1rem' }}
             >
               {t('portfolio.title')}
             </h1>
-            <p className="text-lg md:text-xl text-neutral-600">
+            <p className="md:text-lg text-neutral-600">
               {t('portfolio.subtitle')}
             </p>
           </div>
@@ -46,7 +46,7 @@ export function PortfolioPage() {
       </section>
 
       {/* Filters */}
-      <Section background="light" paddingY="sm">
+      <Section background="light" paddingY="xs">
         <div className="flex flex-wrap justify-center" style={{ gap: '0.75rem' }}>
           {filters.map((filter) => (
             <button
@@ -66,7 +66,7 @@ export function PortfolioPage() {
       </Section>
 
       {/* Projects Grid */}
-      <Section background="light" paddingY="lg">
+      <Section background="light" paddingY="md">
         {filteredProjects.length > 0 ? (
           <div className="grid-projects">
             {filteredProjects.map((project, index) => (
