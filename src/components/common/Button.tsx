@@ -17,7 +17,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary:
     'border-2 border-primary-500 bg-primary-500 text-white hover:bg-primary-600 shadow-md hover:shadow-lg',
   secondary:
-    'bg-accent-500 text-white hover:bg-accent-600 shadow-md hover:shadow-lg',
+    'bg-accent-700 text-white shadow-md hover:text-primary-800 hover:shadow-lg',
   outline:
     'border-2 border-primary-200 text-primary-200 hover:bg-primary-100 hover:text-white',
   ghost:
