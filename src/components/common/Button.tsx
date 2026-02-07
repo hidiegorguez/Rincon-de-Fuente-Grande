@@ -15,11 +15,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary-500 text-white hover:bg-primary-600 shadow-md hover:shadow-lg',
+    'border-2 border-primary-500 bg-primary-500 text-white hover:bg-primary-600 shadow-md hover:shadow-lg',
   secondary:
     'bg-accent-500 text-white hover:bg-accent-600 shadow-md hover:shadow-lg',
   outline:
-    'border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white',
+    'border-2 border-primary-200 text-primary-200 hover:bg-primary-100 hover:text-white',
   ghost:
     'text-primary-500 hover:bg-primary-50',
 };
@@ -47,7 +47,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center font-semibold rounded-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
     const combinedStyles = `${baseStyles} ${variantStyles[variant]} ${
       fullWidth ? 'w-full' : ''

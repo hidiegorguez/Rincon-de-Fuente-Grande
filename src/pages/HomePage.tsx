@@ -21,7 +21,7 @@ export function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center bg-linear-to-br from-primary-500 via-primary-600 to-primary-700 text-white overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center bg-primary-600 text-white overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
@@ -114,7 +114,7 @@ export function HomePage() {
           ))}
         </div>
         <div className="text-center" style={{ marginTop: '2.5rem' }}>
-          <Button href="/servicios" variant="outline">
+          <Button href="/servicios" variant="primary">
             {t('common.learnMore')}
             <ArrowRight className="w-4 h-4" style={{ marginLeft: '0.5rem' }} />
           </Button>
@@ -218,7 +218,7 @@ export function HomePage() {
             <Button
               href={`tel:${companyInfo.contact.phone}`}
               size="lg"
-              variant="outline"
+              variant="secondary"
               isExternal
             >
               {companyInfo.contact.phone}

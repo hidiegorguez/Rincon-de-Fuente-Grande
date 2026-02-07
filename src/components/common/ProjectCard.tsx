@@ -111,7 +111,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
 
         {/* Botón */}
         <Link to={`/portfolio/${project.slug}`} className="block" style={{ marginTop: '1rem' }}>
-          <Button variant="outline" fullWidth size="sm">
+          <Button variant="secondary" fullWidth size="sm">
             {t('portfolio.viewProject')}
           </Button>
         </Link>

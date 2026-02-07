@@ -33,7 +33,7 @@ export function PortfolioPage() {
         <div className="layout-container">
           <div className="max-w-3xl">
             <h1 
-              className="text-2xl md:text-3xl font-bold text-neutral-800"
+              className="text-2xl md:text-3xl font-bold text-accent-900"
               style={{ marginBottom: '1rem' }}
             >
               {t('portfolio.title')}
