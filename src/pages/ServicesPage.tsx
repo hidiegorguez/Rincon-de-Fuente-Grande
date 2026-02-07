@@ -11,7 +11,7 @@ export function ServicesPage() {
     <>
       {/* Hero */}
       <section 
-        className="bg-linear-to-t from-white-200 to-accent-300"
+        className="bg-linear-to-t from-white-200 to-primary-300"
         style={{ paddingTop: '7rem', paddingBottom: '1rem' }}
       >
         <div className="layout-container">
