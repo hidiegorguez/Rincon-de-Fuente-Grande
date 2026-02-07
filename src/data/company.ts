@@ -12,7 +12,7 @@ export const companyInfo: CompanyInfo = {
     'Somos una empresa especializada en inversiones inmobiliarias, dedicada a identificar oportunidades únicas en el mercado español. Transformamos espacios con potencial en hogares con valor, generando rentabilidad sostenible para nuestros inversores.',
   contact: {
     email: 'info@rincondefuentegrande.com',
-    phone: '+34 678 756 924',
+    phone: '+34 722 671 523',
     address: 'España',
     schedule: 'Lunes a Viernes: 9:00 - 18:00',
   },
