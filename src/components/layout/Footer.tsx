@@ -14,7 +14,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4" style={{ gap: '2rem' }}>
           {/* Columna 1: Logo y descripción */}
           <div className="lg:col-span-2">
-            <Link to="/" className="text-2xl font-bold text-white">
+            <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white">
+              <img 
+                src="/icon.png" 
+                alt="" 
+                className="w-10 h-10"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
               {companyInfo.name}
             </Link>
             <p className="text-neutral-400" style={{ marginTop: '1rem', maxWidth: '28rem' }}>
@@ -22,7 +28,7 @@ export function Footer() {
             </p>
             {/* Redes sociales */}
             <div className="flex" style={{ gap: '1rem', marginTop: '1.5rem' }}>
-              {companyInfo.social.linkedin && (
+              {/* {companyInfo.social.linkedin && (
                 <a
                   href={companyInfo.social.linkedin}
                   target="_blank"
@@ -32,7 +38,7 @@ export function Footer() {
                 >
                   <Linkedin className="w-5 h-5" />
                 </a>
-              )}
+              )} */}
               {companyInfo.social.instagram && (
                 <a
                   href={companyInfo.social.instagram}

@@ -46,10 +46,16 @@ export function Header() {
           {/* Logo */}
           <Link
             to="/"
-            className={`text-xl md:text-2xl font-bold transition-colors ${
+            className={`flex items-center gap-2 text-xl md:text-2xl font-bold transition-colors ${
               isScrolled ? 'text-primary-500' : 'text-white'
             }`}
           >
+            <img 
+              src="/icon.svg" 
+              alt="" 
+              className="w-8 h-8 md:w-10 md:h-10"
+              style={{ filter: isScrolled ? 'none' : 'brightness(0) invert(1)' }}
+            />
             {companyInfo.name}
           </Link>
 
