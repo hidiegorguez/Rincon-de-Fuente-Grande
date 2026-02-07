@@ -126,7 +126,7 @@ export function Header() {
             transition={{ duration: 0.3 }}
             className="lg:hidden bg-white border-t border-neutral-100"
           >
-            <div className="layout-container" style={{ padding: '1.5rem 0' }}>
+            <div className="layout-container" style={{ padding: '2rem' }}>
               <div className="flex flex-col" style={{ gap: '1rem' }}>
                 {enabledNavItems.map((item) => (
                   <Link
