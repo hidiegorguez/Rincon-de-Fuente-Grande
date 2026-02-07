@@ -1,0 +1,194 @@
+/* ============================================
+   SISTEMA DE TEMAS - Rincón de Fuentegrande
+   ============================================
+   
+   Para cambiar el tema, modifica la clase del <html> en index.html:
+   - theme-elegant (azul marino/dorado - DEFAULT)
+   - theme-earth (tonos tierra/marrón)
+   - theme-forest (verde bosque)
+   - theme-ocean (azul océano)
+   - theme-wine (burdeos/vino)
+   
+   Ejemplo: <html lang="es" class="theme-earth">
+   ============================================ */
+
+/* TEMA 1: ELEGANT (Azul marino + Dorado) - DEFAULT */
+:root,
+.theme-elegant {
+  --color-primary-50: #f8fafc;
+  --color-primary-100: #e2e8f0;
+  --color-primary-200: #cbd5e1;
+  --color-primary-300: #94a3b8;
+  --color-primary-400: #64748b;
+  --color-primary-500: #1e3a5f;
+  --color-primary-600: #1a3454;
+  --color-primary-700: #152a45;
+  --color-primary-800: #0f1f33;
+  --color-primary-900: #0a1422;
+
+  --color-accent-50: #fefce8;
+  --color-accent-100: #fef9c3;
+  --color-accent-200: #fef08a;
+  --color-accent-300: #fde047;
+  --color-accent-400: #d4a847;
+  --color-accent-500: #b8942d;
+  --color-accent-600: #9a7b23;
+  --color-accent-700: #7c631c;
+  --color-accent-800: #5e4a15;
+  --color-accent-900: #40320e;
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+}
+
+/* TEMA 2: EARTH (Tonos tierra/marrón) */
+.theme-earth {
+  --color-primary-50: #faf8f5;
+  --color-primary-100: #f0ebe3;
+  --color-primary-200: #e1d7c7;
+  --color-primary-300: #c9b89e;
+  --color-primary-400: #a69070;
+  --color-primary-500: #6b4423;
+  --color-primary-600: #5c3a1e;
+  --color-primary-700: #4a2f18;
+  --color-primary-800: #382312;
+  --color-primary-900: #26180c;
+
+  --color-accent-50: #fdf8f3;
+  --color-accent-100: #f9ede0;
+  --color-accent-200: #f3dbc2;
+  --color-accent-300: #e8c39b;
+  --color-accent-400: #d4a574;
+  --color-accent-500: #c08552;
+  --color-accent-600: #a06d42;
+  --color-accent-700: #805634;
+  --color-accent-800: #604026;
+  --color-accent-900: #402a19;
+
+  --color-neutral-50: #fafaf9;
+  --color-neutral-100: #f5f5f4;
+  --color-neutral-200: #e7e5e4;
+  --color-neutral-300: #d6d3d1;
+  --color-neutral-400: #a8a29e;
+  --color-neutral-500: #78716c;
+  --color-neutral-600: #57534e;
+  --color-neutral-700: #44403c;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1c1917;
+}
+
+/* TEMA 3: FOREST (Verde bosque) */
+.theme-forest {
+  --color-primary-50: #f6f9f6;
+  --color-primary-100: #e3ece3;
+  --color-primary-200: #c7d9c7;
+  --color-primary-300: #9bbf9b;
+  --color-primary-400: #6a9a6a;
+  --color-primary-500: #2d5a3d;
+  --color-primary-600: #264d34;
+  --color-primary-700: #1f3f2a;
+  --color-primary-800: #172f20;
+  --color-primary-900: #0f2016;
+
+  --color-accent-50: #f9faf6;
+  --color-accent-100: #eff3e6;
+  --color-accent-200: #dfe7cd;
+  --color-accent-300: #c5d4a5;
+  --color-accent-400: #a8bc7a;
+  --color-accent-500: #8ba352;
+  --color-accent-600: #728642;
+  --color-accent-700: #5a6a34;
+  --color-accent-800: #434e26;
+  --color-accent-900: #2c3319;
+
+  --color-neutral-50: #f9faf9;
+  --color-neutral-100: #f3f4f3;
+  --color-neutral-200: #e5e7e5;
+  --color-neutral-300: #d1d5d1;
+  --color-neutral-400: #9ca39c;
+  --color-neutral-500: #6b746b;
+  --color-neutral-600: #52594e;
+  --color-neutral-700: #40453c;
+  --color-neutral-800: #282b26;
+  --color-neutral-900: #181a17;
+}
+
+/* TEMA 4: OCEAN (Azul océano) */
+.theme-ocean {
+  --color-primary-50: #f4f9fc;
+  --color-primary-100: #dceef7;
+  --color-primary-200: #b9ddef;
+  --color-primary-300: #87c5e3;
+  --color-primary-400: #4fa6d2;
+  --color-primary-500: #0c5776;
+  --color-primary-600: #0a4a64;
+  --color-primary-700: #083c51;
+  --color-primary-800: #062d3d;
+  --color-primary-900: #041e29;
+
+  --color-accent-50: #f0fdfc;
+  --color-accent-100: #ccfbf6;
+  --color-accent-200: #99f6ec;
+  --color-accent-300: #5eead8;
+  --color-accent-400: #2dd4bf;
+  --color-accent-500: #14b8a6;
+  --color-accent-600: #0d9488;
+  --color-accent-700: #0f766e;
+  --color-accent-800: #115e59;
+  --color-accent-900: #134e4a;
+
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+}
+
+/* TEMA 5: WINE (Burdeos/Vino) */
+.theme-wine {
+  --color-primary-50: #fdf6f7;
+  --color-primary-100: #f8e4e6;
+  --color-primary-200: #f0c5ca;
+  --color-primary-300: #e39aa3;
+  --color-primary-400: #d06b78;
+  --color-primary-500: #722f37;
+  --color-primary-600: #62282f;
+  --color-primary-700: #502026;
+  --color-primary-800: #3c181c;
+  --color-primary-900: #281013;
+
+  --color-accent-50: #fdf8f6;
+  --color-accent-100: #f9ece6;
+  --color-accent-200: #f2d8cc;
+  --color-accent-300: #e7bba6;
+  --color-accent-400: #d99a7b;
+  --color-accent-500: #c87d56;
+  --color-accent-600: #a66445;
+  --color-accent-700: #844f36;
+  --color-accent-800: #623b28;
+  --color-accent-900: #41271a;
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f4f4;
+  --color-neutral-200: #e8e5e5;
+  --color-neutral-300: #d6d1d1;
+  --color-neutral-400: #a39c9c;
+  --color-neutral-500: #736c6c;
+  --color-neutral-600: #575151;
+  --color-neutral-700: #433e3e;
+  --color-neutral-800: #2b2727;
+  --color-neutral-900: #1a1717;
+}
