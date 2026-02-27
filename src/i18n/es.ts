@@ -104,7 +104,7 @@ export const es = {
     },
     status: {
       completed: 'Completado',
-      'in-progress': 'En curso',
+      'in-progress': 'En progreso',
       planned: 'Planificado',
     },
   },

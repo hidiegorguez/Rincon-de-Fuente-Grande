@@ -1,0 +1,31 @@
+# ================================
+# Configuración de Fly.io
+# ================================
+# Cambia "rincon-fuentegrande-api" por el nombre que quieras para tu app
+
+app = "rincon-fuentegrande-api"
+primary_region = "mad"  # Madrid - cambia si prefieres otra región
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  # Variables no sensibles van aquí
+  # Las sensibles (API keys, secrets) se configuran con: fly secrets set KEY=value
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256

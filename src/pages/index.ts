@@ -6,3 +6,7 @@ export { AboutPage } from './AboutPage';
 export { ContactPage } from './ContactPage';
 export { PrivacyPolicyPage } from './PrivacyPolicyPage';
 export { TermsPage } from './TermsPage';
+export { LoginPage } from './LoginPage';
+export { RegisterPage } from './RegisterPage';
+export { PortalPage } from './PortalPage';
+export { PortalProjectPage } from './PortalProjectPage';

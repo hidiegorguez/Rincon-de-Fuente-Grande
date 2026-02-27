@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, User, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navigation, companyInfo, siteConfig } from '@/data/company';
 import { Button, Logo } from '@/components/common';
+import { useAuth } from '@/contexts';
 
 export function Header() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
+  const { user, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -92,14 +94,57 @@ export function Header() {
                 <span className="uppercase">{i18n.language}</span>
               </button>
             )}
-            <Button 
-              href="/contacto" 
-              size="sm"
-              variant={isScrolled ? 'primary' : 'outline'}
-              className={isScrolled ? '' : 'border-white text-white hover:bg-white hover:text-primary-600'}
-            >
-              {t('nav.contact')}
-            </Button>
+            
+            {isAuthenticated ? (
+              <>
+                {/* Usuario autenticado */}
+                <Link
+                  to="/portal"
+                  className={`flex items-center text-sm font-medium transition-colors ${
+                    isScrolled
+                      ? 'text-neutral-600 hover:text-primary-500'
+                      : 'text-white/80 hover:text-white'
+                  }`}
+                  style={{ gap: '0.5rem' }}
+                >
+                  <User className="w-4 h-4" />
+                  <span>{user?.name?.split(' ')[0]}</span>
+                </Link>
+                <button
+                  onClick={logout}
+                  className={`flex items-center text-sm font-medium transition-colors ${
+                    isScrolled
+                      ? 'text-neutral-600 hover:text-red-500'
+                      : 'text-white/80 hover:text-white'
+                  }`}
+                  title="Cerrar sesión"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </>
+            ) : (
+              <>
+                {/* Usuario no autenticado */}
+                <Link
+                  to="/login"
+                  className={`text-sm font-medium transition-colors ${
+                    isScrolled
+                      ? 'text-neutral-600 hover:text-primary-500'
+                      : 'text-white/80 hover:text-white'
+                  }`}
+                >
+                  Iniciar sesión
+                </Link>
+                <Button 
+                  href="/registro" 
+                  size="sm"
+                  variant={isScrolled ? 'primary' : 'outline'}
+                  className={isScrolled ? '' : 'border-white text-white hover:bg-white hover:text-primary-600'}
+                >
+                  Registrarse
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Botón menú móvil */}
@@ -153,9 +198,32 @@ export function Header() {
                     {i18n.language === 'es' ? 'English' : 'Español'}
                   </button>
                 )}
-                <Button href="/contacto" fullWidth>
-                  {t('nav.contact')}
-                </Button>
+                
+                {isAuthenticated ? (
+                  <>
+                    <Button href="/portal" fullWidth variant="outline">
+                      <User className="w-4 h-4" style={{ marginRight: '0.5rem' }} />
+                      Mi portal
+                    </Button>
+                    <button
+                      onClick={logout}
+                      className="flex items-center justify-center w-full text-lg font-medium text-red-500"
+                      style={{ gap: '0.5rem', padding: '0.75rem' }}
+                    >
+                      <LogOut className="w-5 h-5" />
+                      Cerrar sesión
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Button href="/login" fullWidth variant="outline">
+                      Iniciar sesión
+                    </Button>
+                    <Button href="/registro" fullWidth>
+                      Registrarse
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
