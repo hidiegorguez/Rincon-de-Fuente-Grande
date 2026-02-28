@@ -341,7 +341,6 @@ class AirtableService:
         """Obtiene las actualizaciones de un proyecto por su slug"""
         async with httpx.AsyncClient() as client:
             # Usar Lookup "Slug Proyecto" para buscar por slug
-            print(f"Buscando actualizaciones para proyecto slug={project_slug}")
             formula = f"FIND('{project_slug}', ARRAYJOIN({{Slug Proyecto}}))"
             response = await client.get(
                 self._get_table_url(settings.airtable_project_updates_table),
@@ -356,14 +355,12 @@ class AirtableService:
             response.raise_for_status()
             
             records = response.json().get("records", [])
-            print(f"Actualizaciones encontradas: {len(records)}")
             return [self._parse_project_update(r) for r in records]
     
     async def get_project_messages(self, project_slug: str, limit: int = 50) -> list[dict]:
         """Obtiene los mensajes de un proyecto por su slug"""
         async with httpx.AsyncClient() as client:
             # Usar Lookup "Slug Proyecto" para buscar por slug
-            print(f"Buscando mensajes para proyecto slug={project_slug}")
             formula = f"FIND('{project_slug}', ARRAYJOIN({{Slug Proyecto}}))"
             response = await client.get(
                 self._get_table_url(settings.airtable_messages_table),
@@ -383,14 +380,13 @@ class AirtableService:
             response.raise_for_status()
             
             records = response.json().get("records", [])
-            print(f"Mensajes encontrados: {len(records)}")
             return [self._parse_message_for_project(r) for r in records]
     
     def _parse_message_for_project(self, record: dict) -> dict:
         """Parsea mensaje para mostrar en proyecto"""
         fields = record.get("fields", {})
         
-        # Linked records y lookups devuelven arrays
+        # Linked records que devuelven arrays
         user_id = fields.get("ID Usuario")
         if isinstance(user_id, list):
             user_id = user_id[0] if user_id else ""
@@ -401,12 +397,13 @@ class AirtableService:
             user_name = user_name[0] if user_name else "Usuario"
         
         return {
-            "id": record["id"],
+            "id": fields.get("ID", ""),
             "user_id": user_id,
             "user_name": user_name,
             "subject": fields.get("Título", ""),
             "content": fields.get("Contenido", ""),
             "created_at": fields.get("Fecha"),
+            "parent_id": fields.get("ID Padre"),
         }
     
     def _parse_project(self, record: dict, full: bool = False) -> dict:
@@ -616,7 +613,6 @@ class AirtableService:
             if not user:
                 raise ValueError(f"Usuario no encontrado: {user_uid}")
             user_record_id = user["id"]
-            print(f"DEBUG: create_message user_uid={user_uid}, user_record_id={user_record_id}, user={user}")
             data = {
                 "fields": {
                     "ID": message_id,
@@ -636,9 +632,7 @@ class AirtableService:
                 data["fields"]["ID Proyecto"] = [parent_project_id]
             if parent_project_slug:
                 data["fields"]["Slug Proyecto"] = parent_project_slug
-            print(f'TENEMOS ID DE PADRE = {parent_id}')
             if parent_id:
-                print(f"Creando mensaje con parent_id={parent_id}")
                 data["fields"]["ID Padre"] = parent_id
             response = await client.post(
                 self._get_table_url(settings.airtable_messages_table),
