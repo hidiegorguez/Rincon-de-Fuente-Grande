@@ -16,72 +16,21 @@ import {
 } from 'lucide-react';
 import { Section, Button } from '@/components/common';
 import { useAuth } from '@/contexts';
+
 import { ProjectFeatures } from '@/components/project/ProjectFeatures';
 import { ProjectGallery } from '@/components/project/ProjectGallery';
 import { ProjectUpdates } from '@/components/project/ProjectUpdates';
 import { ProjectMessages } from '@/components/project/ProjectMessages';
 import { InvestmentSidebar } from '@/components/project/InvestmentSidebar';
+import type {
+  Project,
+  ProjectUpdate,
+  ProjectMessage,
+} from '@/types/project';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 // Tipos
-interface ProjectLocation {
-  city: string;
-  province: string;
-  region: string;
-}
-
-interface InvestmentDetails {
-  purchase_price: number;
-  reform_cost: number | null;
-  total_investment: number;
-  current_value: number | null;
-  monthly_rent: number | null;
-  annual_return: number;
-}
-
-interface ProjectImage {
-  url: string;
-  filename: string;
-}
-
-interface Project {
-  id: string;
-  slug: string;
-  title: string;
-  location: ProjectLocation;
-  type: string;
-  short_description: string;
-  description: string;
-  main_image: ProjectImage | null;
-  gallery: ProjectImage[];
-  images: ProjectImage[];
-  status: string;
-  year: number;
-  featured: boolean;
-  is_public: boolean;
-  investment_details: InvestmentDetails;
-  features: string[];
-}
-
-interface ProjectUpdate {
-  id: string;
-  title: string;
-  content: string;
-  update_type: string;
-  attachments: { url: string; filename: string }[];
-  published_at: string;
-}
-
-interface ProjectMessage {
-  id: string;
-  user_id: string;
-  user_name: string;
-  subject: string;
-  content: string;
-  created_at: string;
-  parent_id?: string | null;
-}
 
 export function PortalProjectPage() {
   const { slug } = useParams<{ slug: string }>();
