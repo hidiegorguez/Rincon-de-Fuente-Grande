@@ -52,6 +52,8 @@ export function PortalProjectPage() {
   const [messageError, setMessageError] = useState<string | null>(null);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState('');
+  const [replySent, setReplySent] = useState<string | null>(null);
+  const [replyError, setReplyError] = useState<string | null>(null);
 
   // Redirigir si no está autenticado
   useEffect(() => {
@@ -106,6 +108,8 @@ export function PortalProjectPage() {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
@@ -125,15 +129,17 @@ export function PortalProjectPage() {
     if (!token || !slug) return;
     setSendingMessage(true);
     setMessageError(null);
+    if (parentId) {
+      setReplyError(null);
+      setReplySent(null);
+    }
     let subject = messageSubject;
     let content = messageContent;
     let url = `${API_URL}/api/messages`;
     let method = 'POST';
     let body: any = {};
     if (parentId) {
-      // Buscar el mensaje padre por el campo personalizado 'ID', no por el record_id
       const parentMsg = messages.find(m => m.id === parentId || m.parent_id === parentId);
-      // Usar el campo 'ID' si existe, si no, fallback al record_id
       const parentCustomId = parentMsg && parentMsg.parent_id ? parentMsg.parent_id : parentId;
       subject = parentMsg ? parentMsg.subject : '';
       content = replyContent;
@@ -153,6 +159,9 @@ export function PortalProjectPage() {
       });
       if (!response.ok) {
         const data = await response.json();
+        if (parentId) {
+          setReplyError(data.detail || 'Error al enviar la respuesta');
+        }
         throw new Error(data.detail || 'Error al enviar el mensaje');
       }
       const newMessage = await response.json();
@@ -165,18 +174,20 @@ export function PortalProjectPage() {
         created_at: new Date().toISOString(),
         parent_id: parentId,
       }, ...prev]);
-      setMessageSent(true);
       if (parentId) {
+        setReplySent(parentId);
         setReplyContent('');
         setReplyingTo(null);
+        setTimeout(() => setReplySent(null), 5000);
       } else {
+        setMessageSent(true);
         setMessageSubject('');
         setMessageContent('');
+        setTimeout(() => setMessageSent(false), 5000);
       }
-      setTimeout(() => setMessageSent(false), 5000);
     } catch (err) {
       console.error('Error sending message:', err);
-      setMessageError(err instanceof Error ? err.message : 'Error al enviar el mensaje');
+      if (!parentId) setMessageError(err instanceof Error ? err.message : 'Error al enviar el mensaje');
     } finally {
       setSendingMessage(false);
     }
@@ -326,10 +337,14 @@ export function PortalProjectPage() {
                 messageContent={messageContent}
                 replyingTo={replyingTo}
                 replyContent={replyContent}
+                replySent={replySent}
+                replyError={replyError}
                 setMessageSubject={setMessageSubject}
                 setMessageContent={setMessageContent}
                 setReplyingTo={setReplyingTo}
                 setReplyContent={setReplyContent}
+                setReplySent={setReplySent}
+                setReplyError={setReplyError}
                 handleSendMessage={handleSendMessage}
                 formatDate={formatDate}
               />

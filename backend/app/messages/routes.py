@@ -131,12 +131,9 @@ async def reply_to_message(
     Responde a un mensaje existente. Permite que cualquier usuario responda a cualquier mensaje.
     """
     airtable = AirtableService()
-    print(f"DEBUG: reply_to_message called with message_id={message_id}, user_uid={user_uid}")
     # Obtener mensaje original (solo para contexto, no para restricción de acceso)
     original = await airtable.get_message_by_id(message_id)
-    print(f"DEBUG: original message fetched: {original}")
     if not original:
-        print("DEBUG: original message not found")
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Mensaje no encontrado"
@@ -150,7 +147,6 @@ async def reply_to_message(
         parent_project_id=original.get("project_id"),
         parent_project_slug=original.get("project_title") or original.get("slug_proyecto"),
     )
-    print(f"DEBUG: reply created: {reply}")
     return reply
 
 

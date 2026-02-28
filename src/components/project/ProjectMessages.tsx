@@ -65,7 +65,9 @@ export function ProjectMessages({
           <span className="text-base font-semibold text-neutral-800">{message.user_name}</span>
           <span className="text-xs text-neutral-400">{message.created_at && formatDate(message.created_at)}</span>
         </div>
-        <p className="text-base font-bold text-primary-700" style={{ marginBottom: '0.25rem' }}>{message.subject}</p>
+        {!isReply && (
+            <p className="text-base font-bold text-primary-700" style={{ marginBottom: '0.25rem' }}>{message.subject}</p>
+        )}
         <p className="text-neutral-700 text-sm whitespace-pre-wrap" style={{ marginBottom: '0.5rem' }}>{message.content}</p>
         {/* Replies */}
         {replies.length > 0 && (

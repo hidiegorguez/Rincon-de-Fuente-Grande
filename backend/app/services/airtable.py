@@ -685,7 +685,6 @@ class AirtableService:
             user_record_id = user_record_ids[0] if user_record_ids else ""
         else:
             user_record_id = user_record_ids or ""
-        print(f"DEBUG: _parse_message_full user_record_id={user_record_id}, user_record_ids={user_record_ids}")
         custom_user_id = ""
         if user_record_id:
             try:
