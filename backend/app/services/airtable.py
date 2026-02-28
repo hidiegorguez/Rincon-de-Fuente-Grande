@@ -559,19 +559,19 @@ class AirtableService:
             return len(response.json().get("records", []))
     
     async def get_message_by_id(self, message_id: str) -> Optional[dict]:
-        """Obtiene un mensaje por ID"""
+        """Obtiene un mensaje por el campo personalizado 'ID' (no el record ID de Airtable)"""
         async with httpx.AsyncClient() as client:
-            try:
-                response = await client.get(
-                    f"{self._get_table_url(settings.airtable_messages_table)}/{message_id}",
-                    headers=self.headers,
-                )
-                response.raise_for_status()
-                return self._parse_message_full(response.json())
-            except httpx.HTTPStatusError as e:
-                if e.response.status_code == 404:
-                    return None
-                raise
+            formula = f"{{ID}} = '{message_id}'"
+            response = await client.get(
+                self._get_table_url(settings.airtable_messages_table),
+                headers=self.headers,
+                params={"filterByFormula": formula, "maxRecords": 1},
+            )
+            response.raise_for_status()
+            records = response.json().get("records", [])
+            if not records:
+                return None
+            return self._parse_message_full(records[0])
     
     async def get_message_replies(self, parent_id: str) -> list[dict]:
         """Obtiene las respuestas a un mensaje"""
@@ -604,7 +604,7 @@ class AirtableService:
     ) -> dict:
         """Crea un nuevo mensaje"""
         import uuid
-        
+        print(f"\n\nDEBUG: creando mensaje con id de padre {parent_id}\n\n")
         async with httpx.AsyncClient() as client:
             # Generar ID único para el mensaje
             message_id = uuid.uuid4().hex[:8].upper()
