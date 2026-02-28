@@ -11,10 +11,14 @@ interface ProjectMessagesProps {
   messageContent: string;
   replyingTo: string | null;
   replyContent: string;
+  replySent: string | null; // id del mensaje al que se ha respondido con éxito
+  replyError: string | null; // error específico de reply
   setMessageSubject: (v: string) => void;
   setMessageContent: (v: string) => void;
   setReplyingTo: (v: string | null) => void;
   setReplyContent: (v: string) => void;
+  setReplySent: (v: string | null) => void;
+  setReplyError: (v: string | null) => void;
   handleSendMessage: (e: React.FormEvent, parentId?: string | null) => void;
   formatDate: (date: string) => string;
 }
@@ -28,21 +32,22 @@ export function ProjectMessages({
   messageContent,
   replyingTo,
   replyContent,
+  replySent,
+  replyError,
   setMessageSubject,
   setMessageContent,
   setReplyingTo,
   setReplyContent,
+  setReplySent,
+  setReplyError,
   handleSendMessage,
   formatDate,
 }: ProjectMessagesProps) {
   // Renderiza un mensaje y sus replies
   function renderMessageThread(message: ProjectMessage, isReply: boolean = false){
     const replies = messages.filter((r) => r.parent_id === message.id);
-    if (!isReply) {
-      // Solo log para mensajes raíz
-      // eslint-disable-next-line no-console
-      console.log('Mensaje raíz:', message, 'Replies:', replies);
-    }
+    // Permitir responder siempre a mensajes raíz (isReply === false), nunca a replies
+    const canReply = !isReply && !replyingTo;
     return (
       <div
         key={message.id}
@@ -78,8 +83,18 @@ export function ProjectMessages({
             {replies.map(reply => renderMessageThread(reply, true))}
           </div>
         )}
-        {/* Reply button and form */}
-        {replyingTo === message.id ? (
+        {/* Reply button and form, solo para mensajes raíz sin reply */}
+        {canReply && (
+          <button
+            className="mt-3 text-sm text-primary-600 hover:underline"
+            style={{ fontWeight: 500 }}
+            onClick={() => { setReplyingTo(message.id); setReplyContent(''); setReplySent(null); setReplyError(null); }}
+          >
+            Responder
+          </button>
+        )}
+        {/* Formulario de respuesta */}
+        {replyingTo === message.id && (
           <form onSubmit={e => handleSendMessage(e, message.id)} style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <textarea
               value={replyContent}
@@ -92,6 +107,15 @@ export function ProjectMessages({
               style={{ padding: '0.75rem 1.25rem', marginBottom: '0.5rem' }}
               placeholder="Escribe tu respuesta..."
             />
+            {replyError && (
+              <p className="text-red-600 text-xs" style={{ marginBottom: '0.5rem' }}>{replyError}</p>
+            )}
+            {replySent === message.id && (
+              <div className="bg-green-50 border border-green-200 rounded-md flex items-center" style={{ padding: '0.75rem 1rem', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                <p className="text-green-700 text-xs">Respuesta enviada correctamente.</p>
+              </div>
+            )}
             <div className="flex items-center gap-3">
               <button
                 type="submit"
@@ -102,17 +126,9 @@ export function ProjectMessages({
                 {sendingMessage ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 <span style={{ marginLeft: 6 }}>Responder</span>
               </button>
-              <button type="button" className="text-sm text-neutral-500" style={{ marginLeft: 8 }} onClick={() => setReplyingTo(null)}>Cancelar</button>
+              <button type="button" className="text-sm text-neutral-500" style={{ marginLeft: 8 }} onClick={() => { setReplyingTo(null); setReplyContent(''); setReplySent(null); setReplyError(null); }}>Cancelar</button>
             </div>
           </form>
-        ) : (
-          <button
-            className="mt-3 text-sm text-primary-600 hover:underline"
-            style={{ fontWeight: 500 }}
-            onClick={() => { setReplyingTo(message.id); setReplyContent(''); }}
-          >
-            Responder
-          </button>
         )}
       </div>
     );
