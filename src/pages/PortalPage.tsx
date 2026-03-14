@@ -226,7 +226,7 @@ export function PortalPage() {
         </div>
       </section>
 
-      <Section background="light" paddingY="lg">
+      <Section background="light" paddingY="sm">
         <div className="grid-2-cols">
           {/* Tarjeta de Proyectos */}
           <motion.div
