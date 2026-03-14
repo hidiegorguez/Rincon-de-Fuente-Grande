@@ -597,7 +597,6 @@ class AirtableService:
     ) -> dict:
         """Crea un nuevo mensaje"""
         import uuid
-        print(f"\n\nDEBUG: creando mensaje con id de padre {parent_id}\n\n")
         async with httpx.AsyncClient() as client:
             # Generar ID único para el mensaje
             message_id = uuid.uuid4().hex[:8].upper()
@@ -614,17 +613,14 @@ class AirtableService:
                     "Contenido": content,
                 }
             }
-            # Si hay project_slug, buscar el record_id y guardar ambos
+            # Si hay project_slug, buscar el record_id
             if project_slug:
                 project = await self.get_project_by_slug(project_slug)
                 if project:
                     data["fields"]["ID Proyecto"] = [project["id"]]
-                    data["fields"]["Slug Proyecto"] = project["slug"]
-            # Si viene del mensaje padre, clonar ID y slug del proyecto
+            # Si viene del mensaje padre, clonar ID del proyecto
             if parent_project_id:
                 data["fields"]["ID Proyecto"] = [parent_project_id]
-            if parent_project_slug:
-                data["fields"]["Slug Proyecto"] = parent_project_slug
             if parent_id:
                 data["fields"]["ID Padre"] = parent_id
             response = await client.post(
@@ -632,9 +628,6 @@ class AirtableService:
                 headers=self.headers,
                 json=data,
             )
-            if response.status_code != 200:
-                print(f"Error Airtable: {response.status_code}")
-                print(f"Response: {response.text}")
             response.raise_for_status()
             return self._parse_message_preview(response.json())
     
