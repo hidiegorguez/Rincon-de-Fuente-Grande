@@ -45,7 +45,7 @@ export function ProjectMessages({
 }: ProjectMessagesProps) {
   // Renderiza un mensaje y sus replies
   function renderMessageThread(message: ProjectMessage, isReply: boolean = false){
-    const replies = messages.filter((r) => r.parent_id === message.id);
+    const replies = messages.filter((r) => r.parent_id === message.id).sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()); // ordenar por fecha
     // Permitir responder siempre a mensajes raíz (isReply === false), nunca a replies
     const canReply = !isReply && !replyingTo;
     return (
