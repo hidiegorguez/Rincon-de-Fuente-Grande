@@ -150,6 +150,7 @@ class AirtableService:
                     "Cuenta verificada": False,
                     "Cuenta activa": True,
                     "Último inicio": now,
+                    "Conexiones": 1,
                 }
             }
             if phone:
@@ -172,6 +173,7 @@ class AirtableService:
             "password_hash": "Contraseña",
             "is_verified": "Cuenta verificada",
             "last_login": "Último inicio",
+            "conexiones": "Conexiones",
         }
         
         # Convertir nombres de campos
@@ -189,11 +191,11 @@ class AirtableService:
             response.raise_for_status()
             return self._parse_user(response.json())
     
-    async def update_user_last_login(self, user_id: str) -> None:
-        """Actualiza la fecha de último login"""
-        # Formato ISO completo con hora para campos DateTime de Airtable
+    async def update_user_last_login(self, user_id: str, conexiones: int = 0) -> None:
+        """Actualiza la fecha de último login e incrementa conexiones"""
         await self.update_user(user_id, {
-            "last_login": datetime.now(timezone.utc).isoformat()
+            "last_login": datetime.now(timezone.utc).isoformat(),
+            "conexiones": conexiones + 1,
         })
     
     def _parse_user(self, record: dict) -> dict:
@@ -208,6 +210,7 @@ class AirtableService:
             "password_hash": fields.get("Contraseña", ""),
             "is_verified": fields.get("Cuenta verificada", False),
             "last_login": fields.get("Último inicio"),
+            "conexiones": fields.get("Conexiones", 0),
         }
     
     # ============================================

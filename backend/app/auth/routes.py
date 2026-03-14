@@ -91,8 +91,8 @@ async def login(data: LoginRequest):
             detail="Email o contraseña incorrectos"
         )
     
-    # Actualizar último login
-    await airtable.update_user_last_login(user["id"])
+    # Actualizar último login y conexiones
+    await airtable.update_user_last_login(user["id"], user.get("conexiones", 0))
     
     # Generar token (incluimos record_id y user_id personalizado)
     access_token = create_access_token(data={
