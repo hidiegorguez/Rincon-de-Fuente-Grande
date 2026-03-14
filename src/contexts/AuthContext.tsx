@@ -2,7 +2,7 @@
  * Contexto de Autenticación
  * Maneja el estado del usuario y las operaciones de login/logout
  */
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import type { ReactNode } from 'react';
 
 // Tipos
@@ -163,12 +163,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   // Logout
-  const logout = () => {
+  const logout = useCallback(() => {
     setToken(null);
     setUser(null);
     localStorage.removeItem('auth_token');
     localStorage.removeItem('auth_user');
-  };
+  }, []);
+
+  // Auto-logout por inactividad (30 minutos)
+  const INACTIVITY_TIMEOUT = 30 * 60 * 1000;
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const resetInactivityTimer = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (token) {
+      timerRef.current = setTimeout(() => {
+        logout();
+      }, INACTIVITY_TIMEOUT);
+    }
+  }, [token, logout]);
+
+  useEffect(() => {
+    if (!token) {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      return;
+    }
+
+    const events = ['mousedown', 'keydown', 'scroll', 'touchstart'] as const;
+    const handler = () => resetInactivityTimer();
+
+    events.forEach((e) => window.addEventListener(e, handler, { passive: true }));
+    resetInactivityTimer();
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, handler));
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [token, resetInactivityTimer]);
 
   // Limpiar error
   const clearError = () => setError(null);

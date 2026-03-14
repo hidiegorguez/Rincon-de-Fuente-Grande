@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     # JWT
     jwt_secret_key: str = "CAMBIAR-EN-PRODUCCION-usar-openssl-rand-hex-32"
     jwt_algorithm: str = "HS256"
-    jwt_expire_minutes: int = 60 * 24 * 7  # 7 días
+    jwt_expire_minutes: int = 60 * 2  # 2 horas
     
     # Airtable
     airtable_api_key: str = ""
