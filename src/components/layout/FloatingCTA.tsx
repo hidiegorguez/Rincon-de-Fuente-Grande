@@ -4,9 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { MessageCircle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/data/company';
+import { useAuth } from '@/contexts';
 
 export function FloatingCTA() {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
@@ -22,7 +24,7 @@ export function FloatingCTA() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!siteConfig.showFloatingCTA || isDismissed) return null;
+  if (!siteConfig.showFloatingCTA || isDismissed || isAuthenticated) return null;
 
   return (
     <AnimatePresence>
