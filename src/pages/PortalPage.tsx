@@ -24,6 +24,7 @@ interface Project {
   status: string;
   type: string;
   short_description: string;
+  main_image: { url: string; filename: string } | null;
 }
 
 interface Update {
@@ -107,11 +108,58 @@ export function PortalPage() {
 
   if (isLoading) {
     return (
-      <section style={{ paddingTop: '10rem', paddingBottom: '5rem' }}>
-        <div className="layout-container text-center">
-          <p className="text-neutral-600">Cargando...</p>
-        </div>
-      </section>
+      <>
+        {/* Hero skeleton */}
+        <section
+          className="bg-linear-to-t from-white-200 to-primary-300"
+          style={{ paddingTop: '7rem', paddingBottom: '1rem' }}
+        >
+          <div className="layout-container">
+            <div className="bg-primary-200/50 rounded animate-pulse" style={{ width: '14rem', height: '2rem', marginBottom: '1rem' }} />
+            <div className="bg-primary-200/30 rounded animate-pulse" style={{ width: '24rem', maxWidth: '100%', height: '1.25rem' }} />
+          </div>
+        </section>
+
+        <Section background="light" paddingY="lg">
+          <div className="grid-2-cols">
+            {/* Proyectos skeleton */}
+            <div className="bg-white rounded-md shadow-md" style={{ padding: '2rem' }}>
+              <div className="flex items-center" style={{ gap: '1rem', marginBottom: '1.5rem' }}>
+                <div className="bg-neutral-200 rounded-full animate-pulse" style={{ width: '3rem', height: '3rem' }} />
+                <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '8rem', height: '1.5rem' }} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {[...Array(2)].map((_, i) => (
+                  <div key={i} className="bg-neutral-100 rounded-md animate-pulse" style={{ height: '5rem' }} />
+                ))}
+              </div>
+            </div>
+            {/* Actualizaciones skeleton */}
+            <div className="bg-white rounded-md shadow-md" style={{ padding: '2rem' }}>
+              <div className="flex items-center" style={{ gap: '1rem', marginBottom: '1.5rem' }}>
+                <div className="bg-neutral-200 rounded-full animate-pulse" style={{ width: '3rem', height: '3rem' }} />
+                <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '12rem', height: '1.5rem' }} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="bg-neutral-100 rounded-md animate-pulse" style={{ height: '4rem' }} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Perfil skeleton */}
+          <div className="bg-white rounded-md shadow-md" style={{ padding: '2rem', marginTop: '2rem' }}>
+            <div className="flex items-center" style={{ gap: '1rem' }}>
+              <div className="bg-neutral-200 rounded-full animate-pulse" style={{ width: '3rem', height: '3rem' }} />
+              <div>
+                <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '10rem', height: '1.25rem', marginBottom: '0.5rem' }} />
+                <div className="bg-neutral-100 rounded animate-pulse" style={{ width: '14rem', height: '1rem' }} />
+              </div>
+            </div>
+          </div>
+        </Section>
+      </>
     );
   }
 
@@ -198,7 +246,11 @@ export function PortalPage() {
               </div>
               
               {loadingProjects ? (
-                <p className="text-neutral-500">Cargando proyectos...</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {[...Array(2)].map((_, i) => (
+                    <div key={i} className="bg-neutral-100 rounded-md animate-pulse" style={{ height: '5rem' }} />
+                  ))}
+                </div>
               ) : errorProjects ? (
                 <p className="text-red-500">{errorProjects}</p>
               ) : projects.length === 0 ? (
@@ -213,27 +265,48 @@ export function PortalPage() {
                   </div>
                 </>
               ) : (
-                <div className="space-y-3">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {projects.map((project) => (
                     <Link
                       key={project.id}
                       to={`/portal/proyecto/${project.slug}`}
-                      className="block p-4 rounded-md border border-neutral-200 hover:border-primary-300 hover:bg-primary-50 transition-colors"
+                      className="flex items-stretch rounded-md border border-neutral-200 hover:border-primary-300 hover:bg-primary-50 transition-colors overflow-hidden"
                     >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-neutral-800 mb-1">
+                      {project.main_image ? (
+                        <div
+                          className="shrink-0"
+                          style={{
+                            width: '5.5rem',
+                            backgroundImage: `url(${project.main_image.url})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                          }}
+                        />
+                      ) : (
+                        <div
+                          className="bg-neutral-100 shrink-0 flex items-center justify-center"
+                          style={{ width: '5.5rem' }}
+                        >
+                          <FolderOpen className="w-6 h-6 text-neutral-300" />
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between flex-1 min-w-0" style={{ padding: '0.75rem 1rem' }}>
+                        <div className="min-w-0">
+                          <h3 className="font-semibold text-neutral-800" style={{ marginBottom: '0.25rem' }}>
                             {project.title}
                           </h3>
-                          <div className="flex items-center text-sm text-neutral-500 mb-2" style={{ gap: '0.25rem' }}>
-                            <MapPin className="w-3 h-3" />
-                            {project.location.city}, {project.location.province}
+                          <div className="flex items-center text-sm text-neutral-500" style={{ gap: '0.25rem', marginBottom: '0.5rem' }}>
+                            <MapPin className="w-3 h-3 shrink-0" />
+                            <span className="truncate">{project.location.city}, {project.location.province}</span>
                           </div>
-                          <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(project.status)}`}>
+                          <span
+                            className={`text-xs rounded-full font-medium ${getStatusColor(project.status)}`}
+                            style={{ padding: '0.15rem 0.6rem' }}
+                          >
                             {getStatusLabel(project.status)}
                           </span>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-neutral-400" />
+                        <ChevronRight className="w-5 h-5 text-neutral-400 shrink-0" />
                       </div>
                     </Link>
                   ))}
