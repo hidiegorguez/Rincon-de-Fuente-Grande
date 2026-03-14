@@ -337,6 +337,48 @@ class AirtableService:
                 "assigned_at": fields.get("Asignación"),
             }
     
+    async def get_user_all_updates(self, user_id: str, limit: int = 20) -> list[dict]:
+        """Obtiene las últimas actualizaciones de todos los proyectos del usuario"""
+        # Primero obtener los slugs de los proyectos del usuario
+        projects = await self.get_user_projects(user_id)
+        if not projects:
+            return []
+        
+        # Construir fórmula OR para buscar actualizaciones de todos los proyectos
+        slug_conditions = [f"FIND('{p['slug']}', ARRAYJOIN({{Slug Proyecto}}))" for p in projects]
+        formula = f"OR({', '.join(slug_conditions)})"
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                self._get_table_url(settings.airtable_project_updates_table),
+                headers=self.headers,
+                params={
+                    "filterByFormula": formula,
+                    "maxRecords": limit,
+                    "sort[0][field]": "Fecha",
+                    "sort[0][direction]": "desc",
+                },
+            )
+            response.raise_for_status()
+            records = response.json().get("records", [])
+        
+        # Crear mapa slug -> título para enriquecer las actualizaciones
+        slug_to_title = {p["slug"]: p["title"] for p in projects}
+        
+        results = []
+        for r in records:
+            update = self._parse_project_update(r)
+            # Obtener slug del proyecto desde el lookup
+            fields = r.get("fields", {})
+            proj_slug = fields.get("Slug Proyecto")
+            if isinstance(proj_slug, list):
+                proj_slug = proj_slug[0] if proj_slug else ""
+            update["project_slug"] = proj_slug or ""
+            update["project_title"] = slug_to_title.get(proj_slug, "")
+            results.append(update)
+        
+        return results
+
     async def get_project_updates(self, project_slug: str, limit: int = 20) -> list[dict]:
         """Obtiene las actualizaciones de un proyecto por su slug"""
         async with httpx.AsyncClient() as client:

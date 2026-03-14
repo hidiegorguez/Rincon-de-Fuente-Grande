@@ -10,6 +10,7 @@ from app.projects.schemas import (
     ProjectDetail,
     ProjectWithUpdates,
     ProjectUpdate,
+    ProjectUpdateWithProject,
 )
 from app.services.airtable import AirtableService
 
@@ -81,6 +82,20 @@ async def get_user_projects(user_uid: str = Depends(get_current_user_uid)):
     projects = await airtable.get_user_projects(user_uid)
     
     return projects
+
+
+@router.get("/my-updates", response_model=list[ProjectUpdateWithProject])
+async def get_user_updates(
+    user_uid: str = Depends(get_current_user_uid),
+    limit: int = Query(20, ge=1, le=100),
+):
+    """
+    Obtiene las últimas actualizaciones de todos los proyectos del usuario.
+    Para el dashboard del portal.
+    """
+    airtable = AirtableService()
+    updates = await airtable.get_user_all_updates(user_uid, limit=limit)
+    return updates
 
 
 @router.get("/my-projects/{slug}", response_model=ProjectWithUpdates)

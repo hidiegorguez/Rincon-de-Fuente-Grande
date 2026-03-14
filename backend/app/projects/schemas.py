@@ -62,6 +62,12 @@ class ProjectUpdate(BaseModel):
     published_at: datetime
 
 
+class ProjectUpdateWithProject(ProjectUpdate):
+    """Actualización con datos del proyecto asociado"""
+    project_slug: str = ""
+    project_title: str = ""
+
+
 class ProjectMessage(BaseModel):
     """Mensaje de un proyecto"""
     id: str

@@ -1,12 +1,12 @@
 /**
  * Página del Portal de Cliente
- * Muestra los proyectos y mensajes del usuario autenticado
+ * Muestra los proyectos y últimas actualizaciones del usuario autenticado
  */
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FolderOpen, MessageSquare, User, LogOut, ChevronRight, MapPin } from 'lucide-react';
-import { Section, Button } from '@/components/common';
+import { FolderOpen, FileText, User, LogOut, ChevronRight, MapPin } from 'lucide-react';
+import { Section } from '@/components/common';
 import { useAuth } from '@/contexts';
 
 // URL del backend
@@ -26,12 +26,24 @@ interface Project {
   short_description: string;
 }
 
+interface Update {
+  id: string;
+  title: string;
+  content: string;
+  update_type: string;
+  published_at: string;
+  project_slug: string;
+  project_title: string;
+}
+
 export function PortalPage() {
   const navigate = useNavigate();
   const { user, token, isAuthenticated, isLoading, logout } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [errorProjects, setErrorProjects] = useState<string | null>(null);
+  const [updates, setUpdates] = useState<Update[]>([]);
+  const [loadingUpdates, setLoadingUpdates] = useState(true);
 
   // Redirigir si no está autenticado
   useEffect(() => {
@@ -71,6 +83,28 @@ export function PortalPage() {
     }
   }, [isAuthenticated, token]);
 
+  // Cargar actualizaciones
+  useEffect(() => {
+    async function fetchUpdates() {
+      if (!token) return;
+      try {
+        const response = await fetch(`${API_URL}/api/projects/my-updates?limit=10`, {
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (response.ok) {
+          setUpdates(await response.json());
+        }
+      } catch (err) {
+        console.error('Error fetching updates:', err);
+      } finally {
+        setLoadingUpdates(false);
+      }
+    }
+    if (isAuthenticated && token) {
+      fetchUpdates();
+    }
+  }, [isAuthenticated, token]);
+
   if (isLoading) {
     return (
       <section style={{ paddingTop: '10rem', paddingBottom: '5rem' }}>
@@ -104,6 +138,22 @@ export function PortalPage() {
     return colors[status] || 'bg-neutral-100 text-neutral-700';
   };
 
+  const getUpdateTypeInfo = (type: string) => {
+    const types: Record<string, { label: string; color: string }> = {
+      'Avance': { label: 'Avance', color: 'bg-blue-100 text-blue-700' },
+      'Hito': { label: 'Hito', color: 'bg-green-100 text-green-700' },
+      'Documento': { label: 'Documento', color: 'bg-purple-100 text-purple-700' },
+      'Foto': { label: 'Foto', color: 'bg-orange-100 text-orange-700' },
+    };
+    return types[type] || { label: type, color: 'bg-neutral-100 text-neutral-700' };
+  };
+
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('es-ES', {
+      day: 'numeric', month: 'long', year: 'numeric',
+    });
+  };
+
   return (
     <>
       {/* Hero */}
@@ -120,7 +170,7 @@ export function PortalPage() {
               Bienvenido, {user?.name?.split(' ')[0]}
             </h1>
             <p className="md:text-lg text-neutral-600">
-              Este es tu portal de cliente. Aquí puedes ver tus proyectos y mensajes.
+              Este es tu portal de cliente. Aquí puedes ver tus proyectos y sus actualizaciones.
             </p>
           </div>
         </div>
@@ -192,7 +242,7 @@ export function PortalPage() {
             </div>
           </motion.div>
 
-          {/* Tarjeta de Mensajes */}
+          {/* Tarjeta de Últimas Actualizaciones */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -204,19 +254,53 @@ export function PortalPage() {
             >
               <div className="flex items-center" style={{ gap: '1rem', marginBottom: '1.5rem' }}>
                 <div className="bg-primary-100 rounded-full" style={{ padding: '0.75rem' }}>
-                  <MessageSquare className="w-6 h-6 text-primary-600" />
+                  <FileText className="w-6 h-6 text-primary-600" />
                 </div>
                 <h2 className="text-xl font-bold text-neutral-800">
-                  Mensajes
+                  Últimas actualizaciones
                 </h2>
               </div>
-              <p className="text-neutral-600" style={{ marginBottom: '1.5rem' }}>
-                No tienes mensajes nuevos. Aquí recibirás comunicaciones 
-                sobre tus proyectos y consultas.
-              </p>
-              <Button href="/contacto" variant="outline" size="sm">
-                Enviar consulta
-              </Button>
+
+              {loadingUpdates ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="bg-neutral-100 rounded-md animate-pulse" style={{ height: '4rem' }} />
+                  ))}
+                </div>
+              ) : updates.length === 0 ? (
+                <p className="text-neutral-600">
+                  No hay actualizaciones todavía. Cuando haya novedades en tus proyectos, aparecerán aquí.
+                </p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {updates.map((update) => {
+                    const info = getUpdateTypeInfo(update.update_type);
+                    return (
+                      <Link
+                        key={update.id}
+                        to={`/portal/proyecto/${update.project_slug}`}
+                        className="block rounded-md border border-neutral-200 hover:border-primary-300 hover:bg-primary-50 transition-colors"
+                        style={{ padding: '1rem 1.25rem' }}
+                      >
+                        <div className="flex items-center justify-between" style={{ marginBottom: '0.25rem' }}>
+                          <span className="font-semibold text-neutral-800 text-sm">{update.title}</span>
+                          <span
+                            className={`rounded text-xs font-semibold shrink-0 ${info.color}`}
+                            style={{ padding: '0.15rem 0.5rem', marginLeft: '0.75rem' }}
+                          >
+                            {info.label}
+                          </span>
+                        </div>
+                        <div className="flex items-center text-xs text-neutral-500" style={{ gap: '0.5rem' }}>
+                          <span>{update.project_title}</span>
+                          <span>·</span>
+                          <span>{formatDate(update.published_at)}</span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
