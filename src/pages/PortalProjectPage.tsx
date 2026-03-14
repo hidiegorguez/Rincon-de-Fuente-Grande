@@ -115,10 +115,10 @@ export function PortalProjectPage() {
 
   const getUpdateTypeInfo = (type: string) => {
     const types: Record<string, { label: string; color: string }> = {
-      'avance': { label: 'Avance de obra', color: 'bg-blue-100 text-blue-700' },
-      'documento': { label: 'Documento', color: 'bg-purple-100 text-purple-700' },
-      'financiero': { label: 'Actualización financiera', color: 'bg-green-100 text-green-700' },
-      'noticia': { label: 'Noticia', color: 'bg-orange-100 text-orange-700' },
+      'Avance': { label: 'Avance', color: 'bg-blue-100 text-blue-700' },
+      'Hito': { label: 'Hito', color: 'bg-green-100 text-green-700' },
+      'Documento': { label: 'Documento', color: 'bg-purple-100 text-purple-700' },
+      'Foto': { label: 'Foto', color: 'bg-orange-100 text-orange-700' },
     };
     return types[type] || { label: type, color: 'bg-neutral-100 text-neutral-700' };
   };
