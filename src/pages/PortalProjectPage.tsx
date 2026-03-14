@@ -11,7 +11,6 @@ import {
   MapPin,
   Calendar,
   Image as ImageIcon,
-  Loader2,
   AlertCircle,
 } from 'lucide-react';
 import { Section, Button } from '@/components/common';
@@ -193,15 +192,82 @@ export function PortalProjectPage() {
     }
   };
 
-  // Estado de carga
+  // Estado de carga — skeleton
   if (authLoading || loading) {
     return (
-      <Section background="white" paddingY="xl">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary-600" />
-          <p className="text-neutral-600" style={{ marginTop: '1rem' }}>Cargando proyecto...</p>
-        </div>
-      </Section>
+      <>
+        {/* Hero skeleton */}
+        <section className="relative h-[50vh] md:h-[60vh] overflow-hidden bg-neutral-300 animate-pulse">
+          <div
+            className="absolute bottom-0 left-0 right-0"
+            style={{ padding: '1.5rem 1.5rem 3rem' }}
+          >
+            <div className="layout-container">
+              <div className="bg-neutral-400/50 rounded" style={{ width: '8rem', height: '1rem', marginBottom: '1rem' }} />
+              <div className="bg-neutral-400/50 rounded" style={{ width: '60%', height: '2.5rem', marginBottom: '0.75rem' }} />
+              <div className="flex" style={{ gap: '1rem' }}>
+                <div className="bg-neutral-400/50 rounded" style={{ width: '10rem', height: '1rem' }} />
+                <div className="bg-neutral-400/50 rounded" style={{ width: '4rem', height: '1rem' }} />
+                <div className="bg-neutral-400/50 rounded-full" style={{ width: '6rem', height: '1.5rem' }} />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Content skeleton */}
+        <Section background="white" paddingY="lg">
+          <div className="grid-project-detail">
+            {/* Main content skeleton */}
+            <div>
+              {/* Descripción */}
+              <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '14rem', height: '1.75rem', marginBottom: '1rem' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
+                <div className="bg-neutral-100 rounded animate-pulse" style={{ width: '100%', height: '1rem' }} />
+                <div className="bg-neutral-100 rounded animate-pulse" style={{ width: '100%', height: '1rem' }} />
+                <div className="bg-neutral-100 rounded animate-pulse" style={{ width: '75%', height: '1rem' }} />
+              </div>
+
+              {/* Características */}
+              <div className="grid grid-cols-2 md:grid-cols-3" style={{ gap: '1rem', marginBottom: '2rem' }}>
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-neutral-100 rounded animate-pulse" style={{ height: '2.5rem' }} />
+                ))}
+              </div>
+
+              {/* Imágenes */}
+              <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '10rem', height: '1.5rem', marginBottom: '1rem' }} />
+              <div className="grid grid-cols-2 md:grid-cols-3" style={{ gap: '1rem', marginBottom: '2rem' }}>
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="bg-neutral-100 rounded-sm animate-pulse aspect-video" />
+                ))}
+              </div>
+
+              {/* Actualizaciones */}
+              <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '12rem', height: '1.5rem', marginBottom: '1rem' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
+                {[...Array(2)].map((_, i) => (
+                  <div key={i} className="bg-neutral-100 rounded-md animate-pulse" style={{ height: '6rem' }} />
+                ))}
+              </div>
+            </div>
+
+            {/* Sidebar skeleton */}
+            <div className="lg:col-span-1">
+              <div className="bg-neutral-50 rounded-md" style={{ padding: '1.5rem' }}>
+                <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '10rem', height: '1.25rem', marginBottom: '1.5rem' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="flex justify-between items-center" style={{ paddingBottom: '0.75rem', borderBottom: '1px solid #e5e5e5' }}>
+                      <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '6rem', height: '1rem' }} />
+                      <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '5rem', height: '1rem' }} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Section>
+      </>
     );
   }
 
