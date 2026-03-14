@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Mail, Phone, Linkedin, Instagram } from 'lucide-react';
 import { navigation, companyInfo } from '@/data/company';
 import { Logo } from '@/components/common';
+import { useAuth } from '@/contexts';
 
 export function Footer() {
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
-  const enabledNavItems = navigation.filter((item) => item.enabled);
+  const { isAuthenticated } = useAuth();
+  const enabledNavItems = navigation.filter((item) => item.enabled && !(isAuthenticated && item.path === '/contacto'));
 
   return (
     <footer className="bg-neutral-900 text-white">

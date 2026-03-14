@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout';
 import { ScrollToTop } from '@/components/common';
 import { AuthProvider } from '@/contexts';
@@ -16,7 +16,13 @@ import {
   PortalPage,
   PortalProjectPage,
 } from '@/pages';
+import { useAuth } from '@/contexts';
 import '@/i18n';
+
+function AuthRedirectContact() {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Navigate to="/portal" replace /> : <ContactPage />;
+}
 
 function App() {
   return (
@@ -30,7 +36,7 @@ function App() {
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/portfolio/:slug" element={<ProjectDetailPage />} />
             <Route path="/nosotros" element={<AboutPage />} />
-            <Route path="/contacto" element={<ContactPage />} />
+            <Route path="/contacto" element={<AuthRedirectContact />} />
             <Route path="/privacidad" element={<PrivacyPolicyPage />} />
             <Route path="/terminos" element={<TermsPage />} />
             <Route path="/login" element={<LoginPage />} />

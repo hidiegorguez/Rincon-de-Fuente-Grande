@@ -33,7 +33,7 @@ export function Header() {
     i18n.changeLanguage(newLang);
   };
 
-  const enabledNavItems = navigation.filter((item) => item.enabled);
+  const enabledNavItems = navigation.filter((item) => item.enabled && !(isAuthenticated && item.path === '/contacto'));
 
   return (
     <header
