@@ -467,14 +467,7 @@ class AirtableService:
             else:
                 project["features"] = []
             
-            # Parsear galería
-            gallery = []
-            if fields.get("Galería"):
-                for img in fields["Galería"]:
-                    gallery.append({"url": img.get("url", ""), "filename": img.get("filename")})
-            project["gallery"] = gallery
-            
-            # Parsear imágenes (campo adicional)
+            # Parsear imágenes
             images = []
             if fields.get("Imágenes"):
                 for img in fields["Imágenes"]:

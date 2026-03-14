@@ -29,7 +29,6 @@ export interface Project {
   short_description: string;
   description: string;
   main_image: ProjectImage | null;
-  gallery: ProjectImage[];
   images: ProjectImage[];
   status: string;
   year: number;

@@ -48,7 +48,6 @@ class ProjectDetail(ProjectBase):
     description: str
     investment_details: ProjectInvestment
     features: list[str] = []
-    gallery: list[ProjectImage] = []
     images: list[ProjectImage] = []
 
 

@@ -318,11 +318,8 @@ export function PortalProjectPage() {
               {/* Características */}
               <ProjectFeatures features={project.features} />
 
-              {/* Galería */}
-              <ProjectGallery gallery={project.gallery} />
-
               {/* Imágenes del proyecto */}
-              <ProjectGallery gallery={project.images} title="Imágenes" />
+              <ProjectGallery gallery={project.images} title="Galería" />
 
               {/* Actualizaciones del proyecto */}
               <ProjectUpdates updates={updates} getUpdateTypeInfo={getUpdateTypeInfo} formatDate={formatDate} />
