@@ -34,14 +34,16 @@ export function ProjectUpdates({ updates, getUpdateTypeInfo, formatDate }: Proje
               className="bg-white border border-neutral-200 rounded-md shadow-md hover:shadow-xl transition-shadow duration-300"
               style={{ padding: '1.5rem' }}
             >
-              <div
-                className={`inline-block rounded text-xs font-semibold ${info.color}`}
-                style={{ padding: '0.25rem 0.75rem', marginBottom: '0.75rem' }}
-              >
-                {info.label}
-              </div>
-              <div className="font-bold text-neutral-800" style={{ marginBottom: '0.25rem' }}>
-                {update.title}
+              <div className="flex items-center justify-between" style={{ marginBottom: '0.25rem' }}>
+                <div className="font-bold text-neutral-800">
+                  {update.title}
+                </div>
+                <div
+                  className={`rounded text-xs font-semibold shrink-0 ${info.color}`}
+                  style={{ padding: '0.25rem 0.75rem', marginLeft: '1rem' }}
+                >
+                  {info.label}
+                </div>
               </div>
               <div className="text-xs text-neutral-500" style={{ marginBottom: '0.75rem' }}>
                 {formatDate(update.published_at)}
