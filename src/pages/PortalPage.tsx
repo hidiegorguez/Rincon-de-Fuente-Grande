@@ -168,10 +168,12 @@ export function PortalPage() {
   }
 
   // Helper para traducir estado
+  // Las claves deben coincidir con el backend (airtable.py → status_mapping)
+  // Valores actuales en Airtable: "En progreso", "Completado" → backend envía: "in-progress", "completed", "planned"
   const getStatusLabel = (status: string) => {
     const labels: Record<string, string> = {
       'planned': 'Planificado',
-      'in_progress': 'En progreso',
+      'in-progress': 'En progreso',
       'completed': 'Completado',
     };
     return labels[status] || status;
@@ -180,7 +182,7 @@ export function PortalPage() {
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
       'planned': 'bg-yellow-100 text-yellow-700',
-      'in_progress': 'bg-blue-100 text-blue-700',
+      'in-progress': 'bg-blue-100 text-blue-700',
       'completed': 'bg-green-100 text-green-700',
     };
     return colors[status] || 'bg-neutral-100 text-neutral-700';
