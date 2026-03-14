@@ -1,4 +1,4 @@
-import type { Project } from '@/types';
+import type { Project } from '@/types/project';
 import { useTranslation } from 'react-i18next';
 import { MapPin, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -31,11 +31,17 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     >
       {/* Imagen */}
       <div className="relative aspect-4/3 overflow-hidden">
-        <img
-          src={project.images.main}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        {project.main_image ? (
+          <img
+            src={project.main_image.url}
+            alt={project.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full bg-neutral-200 flex items-center justify-center">
+            <MapPin className="w-10 h-10 text-neutral-400" />
+          </div>
+        )}
         {/* Badge de estado */}
         <div className="absolute top-4 left-4">
           <span
@@ -80,34 +86,36 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
 
         {/* Descripción corta */}
         <p className="text-neutral-600 text-sm line-clamp-2" style={{ marginBottom: '1rem' }}>
-          {project.shortDescription}
+          {project.short_description}
         </p>
 
         {/* Datos clave */}
-        <div 
-          className="flex items-center justify-between border-t border-neutral-100"
-          style={{ paddingTop: '1rem' }}
-        >
-          <div>
-            <p className="text-xs text-neutral-500 uppercase tracking-wide">
-              {t('portfolio.details.investment')}
-            </p>
-            <p className="text-lg font-bold text-neutral-800">
-              {formatCurrency(project.investmentDetails.totalInvestment)}
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-neutral-500 uppercase tracking-wide">
-              {t('portfolio.details.return')}
-            </p>
-            <div className="flex items-center text-green-600">
-              <TrendingUp className="w-4 h-4" style={{ marginRight: '0.25rem' }} />
-              <span className="text-lg font-bold">
-                {project.investmentDetails.annualReturn}%
-              </span>
+        {project.investment_details && (
+          <div 
+            className="flex items-center justify-between border-t border-neutral-100"
+            style={{ paddingTop: '1rem' }}
+          >
+            <div>
+              <p className="text-xs text-neutral-500 uppercase tracking-wide">
+                {t('portfolio.details.investment')}
+              </p>
+              <p className="text-lg font-bold text-neutral-800">
+                {formatCurrency(project.investment_details.total_investment)}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-neutral-500 uppercase tracking-wide">
+                {t('portfolio.details.return')}
+              </p>
+              <div className="flex items-center text-green-600">
+                <TrendingUp className="w-4 h-4" style={{ marginRight: '0.25rem' }} />
+                <span className="text-lg font-bold">
+                  {Math.round(100 * project.investment_details.annual_return)}%
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Botón */}
         <Link to={`/portfolio/${project.slug}`} className="block" style={{ marginTop: '1rem' }}>

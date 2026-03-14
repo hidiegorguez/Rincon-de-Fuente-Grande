@@ -41,6 +41,7 @@ class ProjectBase(BaseModel):
     status: Literal["completed", "in-progress", "planned"]
     year: int
     featured: bool = False
+    investment_details: ProjectInvestment | None = None
 
 
 class ProjectDetail(ProjectBase):

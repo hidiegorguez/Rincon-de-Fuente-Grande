@@ -1,15 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-// import { Section, SectionHeader, ProjectCard, Button } from '@/components/common';
 import { Section, ProjectCard, Button } from '@/components/common';
-import { projects } from '@/data/projects';
-import type { InvestmentType } from '@/types';
+import type { Project } from '@/types/project';
 
-type FilterType = 'all' | InvestmentType;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+type FilterType = 'all' | string;
 
 export function PortfolioPage() {
   const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const response = await fetch(`${API_URL}/api/projects/public`);
+        if (response.ok) {
+          setProjects(await response.json());
+        }
+      } catch (err) {
+        console.error('Error fetching public projects:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
+  }, []);
 
   const filters: { key: FilterType; label: string }[] = [
     { key: 'all', label: t('portfolio.filters.all') },
@@ -67,7 +85,26 @@ export function PortfolioPage() {
 
       {/* Projects Grid */}
       <Section background="light" paddingY="md">
-        {filteredProjects.length > 0 ? (
+        {loading ? (
+          <div className="grid-projects">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-white rounded-md shadow-md overflow-hidden animate-pulse">
+                <div className="aspect-4/3 bg-neutral-200" />
+                <div style={{ padding: '1.5rem' }}>
+                  <div className="bg-neutral-200 rounded" style={{ width: '60%', height: '0.875rem', marginBottom: '0.5rem' }} />
+                  <div className="bg-neutral-200 rounded" style={{ width: '80%', height: '1.25rem', marginBottom: '0.5rem' }} />
+                  <div className="bg-neutral-100 rounded" style={{ width: '100%', height: '0.875rem', marginBottom: '1rem' }} />
+                  <div className="border-t border-neutral-100" style={{ paddingTop: '1rem' }}>
+                    <div className="flex justify-between">
+                      <div className="bg-neutral-200 rounded" style={{ width: '5rem', height: '1.5rem' }} />
+                      <div className="bg-neutral-200 rounded" style={{ width: '3rem', height: '1.5rem' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredProjects.length > 0 ? (
           <div className="grid-projects">
             {filteredProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />

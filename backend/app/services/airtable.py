@@ -488,19 +488,19 @@ class AirtableService:
             "year": fields.get("Año", 2026),
             "featured": fields.get("Destacado", False),
             "is_public": fields.get("Público", False),
-        }
-        
-        if full:
-            # Agregar campos adicionales para detalle
-            project["description"] = fields.get("Descripción larga", "")
-            project["investment_details"] = {
+            "investment_details": {
                 "purchase_price": fields.get("Precio de compra", 0),
                 "reform_cost": fields.get("Coste de reforma"),
                 "total_investment": fields.get("Inversión total", 0),
                 "current_value": fields.get("Valor actual"),
                 "monthly_rent": fields.get("Alquiler mensual"),
                 "annual_return": fields.get("Retorno anual", 0),
-            }
+            },
+        }
+        
+        if full:
+            # Agregar campos adicionales para detalle
+            project["description"] = fields.get("Descripción larga", "")
             
             # Parsear features (asumiendo que vienen separados por líneas o comas)
             features_raw = fields.get("Características", "")

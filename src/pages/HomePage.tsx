@@ -1,15 +1,32 @@
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowRight, Building2, TrendingUp, Users, Calendar } from 'lucide-react';
 import { Section, SectionHeader, Button, ProjectCard, ServiceCard } from '@/components/common';
-import { getFeaturedProjects } from '@/data/projects';
 import { services } from '@/data/services';
 import { testimonials } from '@/data/services';
 import { companyInfo } from '@/data/company';
+import type { Project } from '@/types/project';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export function HomePage() {
   const { t } = useTranslation();
-  const featuredProjects = getFeaturedProjects().slice(0, 3);
+  const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    async function fetchFeatured() {
+      try {
+        const response = await fetch(`${API_URL}/api/projects/public?featured_only=true&limit=3`);
+        if (response.ok) {
+          setFeaturedProjects(await response.json());
+        }
+      } catch (err) {
+        console.error('Error fetching featured projects:', err);
+      }
+    }
+    fetchFeatured();
+  }, []);
 
   const stats = [
     { icon: Building2, value: '15+', label: t('stats.projects') },

@@ -1,3 +1,9 @@
+/**
+ * Página de Detalle de Proyecto - Vista pública
+ * Carga datos del proyecto desde la API pública (sin autenticación)
+ * Mismos componentes que PortalProjectPage pero sin actualizaciones ni mensajes
+ */
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -5,28 +11,108 @@ import {
   ArrowLeft,
   MapPin,
   Calendar,
-  TrendingUp,
-//   Home,
-  Check,
+  Image as ImageIcon,
+  AlertCircle,
 } from 'lucide-react';
 import { Section, Button } from '@/components/common';
-import { getProjectBySlug, projects } from '@/data/projects';
-import { ProjectCard } from '@/components/common/ProjectCard';
+import { ProjectFeatures } from '@/components/project/ProjectFeatures';
+import { ProjectGallery } from '@/components/project/ProjectGallery';
+import { InvestmentSidebar } from '@/components/project/InvestmentSidebar';
+import type { Project } from '@/types/project';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
-  const project = getProjectBySlug(slug || '');
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!project) {
+  useEffect(() => {
+    async function fetchProject() {
+      if (!slug) return;
+      try {
+        const response = await fetch(`${API_URL}/api/projects/public/${slug}`);
+        if (!response.ok) {
+          setError('Proyecto no encontrado');
+          return;
+        }
+        setProject(await response.json());
+      } catch (err) {
+        console.error('Error:', err);
+        setError('Error al cargar el proyecto');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProject();
+  }, [slug]);
+
+  // Skeleton de carga
+  if (loading) {
+    return (
+      <>
+        <section className="relative h-[50vh] md:h-[60vh] overflow-hidden bg-neutral-300 animate-pulse">
+          <div
+            className="absolute bottom-0 left-0 right-0"
+            style={{ padding: '1.5rem 1.5rem 3rem' }}
+          >
+            <div className="layout-container">
+              <div className="bg-neutral-400/50 rounded" style={{ width: '8rem', height: '1rem', marginBottom: '1rem' }} />
+              <div className="bg-neutral-400/50 rounded" style={{ width: '60%', height: '2.5rem', marginBottom: '0.75rem' }} />
+              <div className="flex" style={{ gap: '1rem' }}>
+                <div className="bg-neutral-400/50 rounded" style={{ width: '10rem', height: '1rem' }} />
+                <div className="bg-neutral-400/50 rounded" style={{ width: '4rem', height: '1rem' }} />
+              </div>
+            </div>
+          </div>
+        </section>
+        <Section background="white" paddingY="lg">
+          <div className="grid-project-detail">
+            <div>
+              <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '14rem', height: '1.75rem', marginBottom: '1rem' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
+                <div className="bg-neutral-100 rounded animate-pulse" style={{ width: '100%', height: '1rem' }} />
+                <div className="bg-neutral-100 rounded animate-pulse" style={{ width: '100%', height: '1rem' }} />
+                <div className="bg-neutral-100 rounded animate-pulse" style={{ width: '75%', height: '1rem' }} />
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3" style={{ gap: '1rem', marginBottom: '2rem' }}>
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-neutral-100 rounded animate-pulse" style={{ height: '2.5rem' }} />
+                ))}
+              </div>
+            </div>
+            <div className="lg:col-span-1">
+              <div className="bg-neutral-50 rounded-md" style={{ padding: '1.5rem' }}>
+                <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '10rem', height: '1.25rem', marginBottom: '1.5rem' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="flex justify-between" style={{ paddingBottom: '0.75rem', borderBottom: '1px solid #e5e5e5' }}>
+                      <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '6rem', height: '1rem' }} />
+                      <div className="bg-neutral-200 rounded animate-pulse" style={{ width: '5rem', height: '1rem' }} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Section>
+      </>
+    );
+  }
+
+  // Error o no encontrado
+  if (error || !project) {
     return (
       <Section background="white" paddingY="xl">
         <div className="text-center">
+          <AlertCircle className="w-16 h-16 mx-auto text-red-400" style={{ marginBottom: '1rem' }} />
           <h1 
-            className="text-3xl font-bold text-neutral-800"
-            style={{ marginBottom: '1rem' }}
+            className="text-2xl font-bold text-neutral-800"
+            style={{ marginBottom: '0.5rem' }}
           >
-            Proyecto no encontrado
+            {error || 'Proyecto no encontrado'}
           </h1>
           <p 
             className="text-neutral-600"
@@ -40,27 +126,21 @@ export function ProjectDetailPage() {
     );
   }
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const otherProjects = projects
-    .filter((p) => p.id !== project.id)
-    .slice(0, 2);
-
   return (
     <>
       {/* Hero Image */}
       <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
-        <img
-          src={project.images.main}
-          alt={project.title}
-          className="w-full h-full object-cover"
-        />
+        {project.main_image ? (
+          <img
+            src={project.main_image.url}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-neutral-300 flex items-center justify-center">
+            <ImageIcon className="w-16 h-16 text-neutral-400" />
+          </div>
+        )}
         <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
         <div 
           className="absolute bottom-0 left-0 right-0"
@@ -127,53 +207,14 @@ export function ProjectDetailPage() {
                 className="text-neutral-600 leading-relaxed"
                 style={{ marginBottom: '2rem' }}
               >
-                {project.description}
+                {project.description || project.short_description || 'Sin descripción disponible.'}
               </p>
 
-              {/* Features */}
-              <h3 
-                className="text-xl font-bold text-neutral-800"
-                style={{ marginBottom: '1rem' }}
-              >
-                {t('portfolio.details.features')}
-              </h3>
-              <div 
-                className="grid grid-cols-2 md:grid-cols-3"
-                style={{ gap: '1rem', marginBottom: '2rem' }}
-              >
-                {project.features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center text-neutral-700"
-                    style={{ padding: '0.5rem', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '0.5rem' }}
-                  >
-                    <Check className="w-5 h-5 text-accent-500 shrink-0" style={{ marginRight: '0.5rem' }} />
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
+              {/* Características */}
+              <ProjectFeatures features={project.features} />
 
-              {/* Gallery */}
-              {project.images.gallery.length > 0 && (
-                <>
-                  <h3 
-                    className="text-xl font-bold text-neutral-800"
-                    style={{ marginBottom: '1rem' }}
-                  >
-                    Galería
-                  </h3>
-                  <div className="grid grid-cols-2" style={{ gap: '1rem' }}>
-                    {project.images.gallery.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image}
-                        alt={`${project.title} - Imagen ${index + 1}`}
-                        className="rounded-sm w-full aspect-video object-cover"
-                      />
-                    ))}
-                  </div>
-                </>
-              )}
+              {/* Galería */}
+              <ProjectGallery gallery={project.images} title="Galería" />
             </motion.div>
           </div>
 
@@ -186,87 +227,7 @@ export function ProjectDetailPage() {
               className="bg-neutral-50 rounded-md sticky top-28"
               style={{ padding: '1.5rem' }}
             >
-              <h3 
-                className="text-lg font-bold text-neutral-800"
-                style={{ marginBottom: '1rem' }}
-              >
-                Datos de inversión
-              </h3>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                  <span className="text-neutral-600">
-                    {t('portfolio.details.type')}
-                  </span>
-                  <span className="font-medium text-neutral-800">
-                    {t(`portfolio.types.${project.type}`)}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                  <span className="text-neutral-600">
-                    Precio de compra
-                  </span>
-                  <span className="font-medium text-neutral-800">
-                    {formatCurrency(project.investmentDetails.purchasePrice)}
-                  </span>
-                </div>
-
-                {project.investmentDetails.reformCost && (
-                  <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                    <span className="text-neutral-600">
-                      Coste de reforma
-                    </span>
-                    <span className="font-medium text-neutral-800">
-                      {formatCurrency(project.investmentDetails.reformCost)}
-                    </span>
-                  </div>
-                )}
-
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                  <span className="text-neutral-600">
-                    {t('portfolio.details.investment')}
-                  </span>
-                  <span className="font-bold text-primary-500">
-                    {formatCurrency(project.investmentDetails.totalInvestment)}
-                  </span>
-                </div>
-
-                {project.investmentDetails.currentValue && (
-                  <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                    <span className="text-neutral-600">
-                      Valor actual
-                    </span>
-                    <span className="font-medium text-neutral-800">
-                      {formatCurrency(project.investmentDetails.currentValue)}
-                    </span>
-                  </div>
-                )}
-
-                {project.investmentDetails.monthlyRent && (
-                  <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                    <span className="text-neutral-600">
-                      Renta mensual
-                    </span>
-                    <span className="font-medium text-neutral-800">
-                      {formatCurrency(project.investmentDetails.monthlyRent)}
-                    </span>
-                  </div>
-                )}
-
-                <div 
-                  className="flex justify-between items-center"
-                  style={{ paddingTop: '0.5rem' }}
-                >
-                  <span className="text-neutral-800 font-medium">
-                    {t('portfolio.details.return')}
-                  </span>
-                  <span className="flex items-center text-green-600 font-bold text-xl">
-                    <TrendingUp className="w-5 h-5" style={{ marginRight: '0.25rem' }} />
-                    {project.investmentDetails.annualReturn}%
-                  </span>
-                </div>
-              </div>
+              <InvestmentSidebar type={project.type} investment_details={project.investment_details} />
 
               <Button href="/contacto" fullWidth style={{ marginTop: '1.5rem' }}>
                 Solicitar información
@@ -275,23 +236,6 @@ export function ProjectDetailPage() {
           </div>
         </div>
       </Section>
-
-      {/* Other Projects */}
-      {otherProjects.length > 0 && (
-        <Section background="light" paddingY="lg">
-          <h2 
-            className="text-2xl md:text-3xl font-bold text-neutral-800 text-center"
-            style={{ marginBottom: '2rem' }}
-          >
-            Otros proyectos
-          </h2>
-          <div className="grid-2-cols" style={{ maxWidth: '56rem', margin: '0 auto' }}>
-            {otherProjects.map((p, index) => (
-              <ProjectCard key={p.id} project={p} index={index} />
-            ))}
-          </div>
-        </Section>
-      )}
     </>
   );
 }
